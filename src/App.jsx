@@ -1,18 +1,15 @@
 import React from "react";
-import {Text, View} from "react-native-windows";
-import GameList from "./screens/itchio/gameList/GameList";
-import ItchioForm from "./screens/itchio/ItchIoForm";
-import PlaydateForm from "./screens/playdate/PlaydateForm";
+import {View} from "react-native-windows";
+import ContentView from "./screens/contentView/ContentView";
+import LeftBar from "./screens/leftBar/LeftBar";
 
 const MainScreen = () => {
   return (
-    <View style={{height: "100%"}}>
-      <Text style={{color: "black"}}>Playdate Itchio Sync</Text>
+    <View style={{height: "100%", backgroundColor: "#212223"}}>
       <View style={{flexDirection: "row"}}>
-        <ItchioForm />
-        <PlaydateForm />
+        <LeftBar />
+        <ContentView />
       </View>
-      <GameList />
     </View>
   );
 };

@@ -9,24 +9,24 @@ const PlaydateForm = () => {
     <View
       style={{
         flexDirection: "column",
-        backgroundColor: "black",
-        margin: 7,
+        backgroundColor: "#ffc833",
         flexGrow: 0,
-        padding: 5,
+        padding: 15,
+        margin: 7,
         borderRadius: 14,
       }}>
-      <Text style={{backgroundColor: "black", color: "white"}}>
+      <Text style={{color: "#212223", fontWeight: "600", marginBottom: 5}}>
         Playdate Login
       </Text>
       <TextInput
-        style={{margin: 3, borderRadius: 5}}
+        style={{borderColor: "black", borderRadius: 5}}
         onChange={e => setEmail(e.currentTarget.value)}
+        value={email}
         placeholder="email"
         textContentType="emailAddress"
-        value={email}
       />
       <TextInput
-        style={{margin: 3, borderRadius: 5}}
+        style={{marginTop: 5, borderColor: "black", borderRadius: 5}}
         onChange={e => setPassword(e.currentTarget.value)}
         textContentType="password"
         placeholder="password"

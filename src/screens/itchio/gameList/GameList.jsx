@@ -18,19 +18,37 @@ const GameList = () => {
     <View
       style={{
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
+        flexDirection: "column",
+        justifyContent: "center",
         alignContent: "center",
-        backgroundColor: "#3f3421",
+        backgroundColor: "#312f28",
         margin: 5,
-        padding: 12,
+        paddingHorizontal: 5,
         borderRadius: 5,
       }}>
-      <Text style={{color: "white", fontFamily: "Arial", lineHeight: 20}}>
-        #{index} - {item}
+      <Text
+        style={{
+          color: "white",
+          fontFamily: "Arial",
+          lineHeight: 20,
+          marginVertical: 5,
+        }}>
+        #{index + 1} - {item.title} ({item.id})
       </Text>
       <Image
-        style={{width: 25, height: 25, tintColor: "white"}}
+        style={{width: "100%", height: 150, borderRadius: 4, marginVertical: 5}}
+        width={250}
+        height={250}
+        source={{uri: item.img}}
+      />
+      <Image
+        style={{
+          width: 25,
+          height: 25,
+          tintColor: "white",
+          alignSelf: "flex-end",
+          marginVertical: 5,
+        }}
         source={require("../../../assets/images/sync.png")}
         width={25}
         height={25}
@@ -40,10 +58,10 @@ const GameList = () => {
 
   return (
     <FlatList
-      style={{backgroundColor: "#111"}}
       data={games}
       renderItem={renderItem}
-      keyExtractor={item => item}
+      keyExtractor={item => item.title}
+      numColumns={4}
     />
   );
 };
