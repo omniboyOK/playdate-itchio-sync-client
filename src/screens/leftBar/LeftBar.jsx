@@ -1,16 +1,16 @@
 import React from "react";
 import {View} from "react-native";
-import ItchioForm from "../itchio/ItchIoForm";
+import ItchioOAuth from "../itchioOauth/ItchioOauth";
 import PlaydateForm from "../playdate/PlaydateForm";
 
 const LeftBar = () => {
   return (
     <View style={{width: "25%"}}>
       <View>
-        <ItchioForm />
+        <PlaydateForm />
       </View>
       <View>
-        <PlaydateForm />
+        <ItchioOAuth />
       </View>
     </View>
   );

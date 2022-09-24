@@ -19,8 +19,6 @@ export const checkToken = async token => {
 
     let credentialsInfo = await response.json();
 
-    console.log(credentialsInfo);
-
     if (credentialsInfo.errors?.length) throw Error("Invalid Token");
 
     await AsyncStorage.setItem("userToken", token);

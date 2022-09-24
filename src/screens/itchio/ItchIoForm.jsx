@@ -11,7 +11,6 @@ const ItchioForm = () => {
     login(email, password)
       .then(data => setToken(data))
       .catch(e => console.log(e));
-    console.log(token);
   };
 
   if (token) {
