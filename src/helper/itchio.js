@@ -1,36 +1,19 @@
 import DomSelector from "react-native-dom-parser";
-import {fetchItchioTaggedGames} from "../api/itchio";
+import {
+  fetchGameDownloads,
+  fetchItchioTaggedGames,
+  fetchOwnedGames,
+} from "../api/itchio";
 import {ATTRIBUTES, QUERY} from "../constants/itchio";
 
-export async function login(username, password) {
-  const params = new URLSearchParams();
-  params.append("username", username);
-  params.append("password", password);
-  params.append("source", "desktop");
-
-  const response = await fetch("https://api.itch.io/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params.toString(),
-  });
-
-  return response.json();
-}
-
 export async function getGames(authorization) {
-  const response = await fetch("https://api.itch.io/profile/owned-keys", {
-    headers: {
-      authorization,
-    },
-  });
+  const response = await fetchOwnedGames(authorization);
   return response.json();
 }
 
 export async function getGameDownloads(game, authorization) {
   const {game_id, id} = game;
-  const response = await getGameDownloads(game_id, id, authorization);
+  const response = await fetchGameDownloads(game_id, id, authorization);
   return response.json();
 }
 
@@ -44,7 +27,6 @@ export async function getPotentialPlaydateGameNames(page) {
 
   const dom = DomSelector(content);
   const games = dom.getElementsByClassName(QUERY.GAME_DATA_CLASS);
-  console.log(games);
   const processedGames = [];
   for (let i = 0; i < games.length; i++) {
     const gameId = games[i].attributes[[ATTRIBUTES.GAME_ID]];
