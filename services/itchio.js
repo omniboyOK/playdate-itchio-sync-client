@@ -1,22 +1,7 @@
 import fetch from "node-fetch";
 import fs from "fs";
 
-export async function login(username, password) {
-  const params = new URLSearchParams();
-  params.append("username", username);
-  params.append("password", password);
-  params.append("source", "desktop");
 
-  const response = await fetch("https://api.itch.io/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: params.toString(),
-  });
-
-  return response.json();
-}
 
 export async function getGames(authorization) {
   const response = await fetch("https://api.itch.io/profile/owned-keys", {
@@ -69,6 +54,8 @@ export async function downloadGame(game, authorization) {
       },
     },
   );
+
+  // REPLACE WITH https://github.com/joltup/rn-fetch-blob#download-example-fetch-files-that-need-authorization-token
   const fileStream = fs.createWriteStream(upload.filename);
   await new Promise((resolve, reject) => {
     response.body.pipe(fileStream);

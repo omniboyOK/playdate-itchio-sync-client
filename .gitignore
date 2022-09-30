@@ -1,6 +1,7 @@
 # OSX
 #
 .DS_Store
+msbuild.binlog
 
 # Xcode
 #
@@ -21,6 +22,9 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/.xcode.env.local
+*.binlog
+.env
+.env.develop
 
 # Android/IntelliJ
 #

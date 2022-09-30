@@ -1,19 +1,43 @@
-import React from "react";
-import {Text, View} from "react-native-windows";
-import GameList from "./screens/itchio/gameList/GameList";
-import ItchioForm from "./screens/itchio/ItchIoForm";
-import PlaydateForm from "./screens/playdate/PlaydateForm";
+import React, {useCallback, useEffect} from "react";
+import {NavigationContainer} from "@react-navigation/native";
+import MainStack from "./navigation/stacks/mainStack/MainStack";
+import NavBar from "./navigation/stacks/navBar/NavBar";
+import {enableScreens} from "react-native-screens";
+import {createStackNavigator} from "@react-navigation/stack";
+import {MAIN_STACK} from "./constants/routes";
+import {navigationRef} from "./navigation/service";
+import useItchioStore from "./store/itchio";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+enableScreens();
+
+const Stack = createStackNavigator();
 
 const MainScreen = () => {
+  const {validateToken} = useItchioStore();
+
+  const asyncLogin = useCallback(async () => {
+    const accessToken = await AsyncStorage.getItem("userToken");
+    validateToken(accessToken);
+  }, []);
+
+  useEffect(() => {
+    asyncLogin();
+  }, [asyncLogin]);
+
   return (
-    <View style={{height: "100%"}}>
-      <Text style={{color: "black"}}>Playdate Itchio Sync</Text>
-      <View style={{flexDirection: "row"}}>
-        <ItchioForm />
-        <PlaydateForm />
-      </View>
-      <GameList />
-    </View>
+    <>
+      <NavigationContainer ref={navigationRef}>
+        <NavBar />
+        <Stack.Navigator>
+          <Stack.Screen
+            name={MAIN_STACK}
+            component={MainStack}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 };
 
