@@ -22,6 +22,10 @@ const useItchioStore = create(set => ({
     const response = await getAllPotentialPlaydateGameNames();
     set({gamestore: response});
   },
+  setOwnedGames: async () => {
+    const response = await getAllPotentialPlaydateGameNames();
+    set({ownedGames: response});
+  },
   setAwait: bool => set({awaitingToken: bool}),
 }));
 

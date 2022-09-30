@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.1 - 2022-09-30
+
+### Changed
+
+- Moved stacks to main stack
+
+### Added
+
+- Added logic for authenticated routes for itchio
+
 ## 0.2.0 - 2022-09-30
 
 ### Added

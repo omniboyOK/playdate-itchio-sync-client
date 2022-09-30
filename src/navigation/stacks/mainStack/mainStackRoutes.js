@@ -1,6 +1,9 @@
-import {ITCHIO_STACK, PLAYDATE_AUTH_ROUTE} from "../../../constants/routes";
+import {
+  ITCHIO_AUTH_ROUTE,
+  PLAYDATE_AUTH_ROUTE,
+} from "../../../constants/routes";
+import ItchioOAuth from "../../../screens/Itchio/itchioOauth/ItchioOauth";
 import PlaydateForm from "../../../screens/playdate/PlaydateForm";
-import ItchioStack from "../itchioStack/ItchioStack";
 
 const mainStackRoutes = [
   {
@@ -10,10 +13,10 @@ const mainStackRoutes = [
     navbar: "Playdate",
   },
   {
-    name: ITCHIO_STACK,
-    component: ItchioStack,
-    options: {title: "Itchio"},
-    navbar: "Itchio",
+    name: ITCHIO_AUTH_ROUTE,
+    component: ItchioOAuth,
+    options: {title: "Itchio Login"},
+    navbar: "Itchio Login",
   },
 ];
 

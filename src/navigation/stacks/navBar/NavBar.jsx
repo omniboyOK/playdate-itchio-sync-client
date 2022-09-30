@@ -1,14 +1,17 @@
 import React from "react";
 import {FlatList, Text, TouchableOpacity, View} from "react-native-windows";
 import {MAIN_STACK} from "../../../constants/routes";
+import useItchioStore from "../../../store/itchio";
+import {useNavigationRef} from "../../service";
+import itchioStackRoutes from "../itchioStack/ItchioStackRoutes";
 import mainStackRoutes from "../mainStack/mainStackRoutes";
 
-const Item = ({route, title, navigation}) => {
+const Item = ({route, title}) => {
+  const navigation = useNavigationRef();
+
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation?.current?.navigate(MAIN_STACK, {screen: route})
-      }>
+      onPress={() => navigation.current.navigate(MAIN_STACK, {screen: route})}>
       <View
         style={{
           flex: 1,
@@ -31,21 +34,23 @@ const Item = ({route, title, navigation}) => {
 };
 
 function NavBar({navigator}) {
+  const {token} = useItchioStore();
+
+  const routes = [...mainStackRoutes, ...(token ? itchioStackRoutes : [])];
   return (
     <View style={{width: 150}}>
       <FlatList
-        data={mainStackRoutes}
+        data={routes}
         renderItem={({item}) => {
           return (
             <Item
               title={item.navbar}
               route={item.name}
               navigation={navigator}
-              key={item.name}
             />
           );
         }}
-        keyExtractor={({route}) => route}
+        keyExtractor={({name}) => name + "_menuBar"}
       />
     </View>
   );

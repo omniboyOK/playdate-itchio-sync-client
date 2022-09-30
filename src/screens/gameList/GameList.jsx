@@ -3,9 +3,9 @@ import {FlatList, ImageBackground, Text, View} from "react-native-windows";
 import BaseIconButton from "../../components/baseIconButton/BaseIconButton";
 import ActionList from "../components/actionList/ActionList";
 
-const GameList = ({games = []}) => {
+const GameList = ({games = [], id = ""}) => {
   const [viewType, setView] = useState("grid");
-  
+
   const renderItemGrid = ({item, index}) => (
     <ImageBackground
       style={{
@@ -17,6 +17,7 @@ const GameList = ({games = []}) => {
         paddingHorizontal: 10,
         borderRadius: 5,
         maxWidth: "20%",
+        elevation: 5,
       }}
       resizeMode="cover"
       source={{uri: item.img}}>
@@ -100,7 +101,7 @@ const GameList = ({games = []}) => {
           key={"listview"}
           data={games}
           renderItem={renderItemList}
-          keyExtractor={item => item.title}
+          keyExtractor={item => item.title + id}
           numColumns={1}
         />
       ) : (
@@ -108,7 +109,7 @@ const GameList = ({games = []}) => {
           key={"gridview"}
           data={games}
           renderItem={renderItemGrid}
-          keyExtractor={item => item.title}
+          keyExtractor={item => item.title + id}
           numColumns={4}
         />
       )}
