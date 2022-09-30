@@ -1,27 +1,21 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {Button} from "react-native";
-import {Text, View} from "react-native-windows";
-import {getAllPotentialPlaydateGameNames} from "../../helper/itchio";
+import React, {useEffect} from "react";
+import {Text} from "react-native-windows";
+import BaseScreen from "../../components/baseScreen/BaseScreen";
+import useItchioStore from "../../store/itchio";
 import GameList from "../gameList/GameList";
 
 const ContentView = () => {
-  const [games, setGames] = useState([]);
-
-  const fetchGames = useCallback(getAllPotentialPlaydateGameNames);
-
+  const games = useItchioStore(state => state.gamestore);
+  const fetchGames = useItchioStore(state => state.setGameStore);
   useEffect(() => {
-    fetchGames()
-      .then(data => {
-        setGames(data);
-      })
-      .catch(console.error);
-  }, [fetchGames]);
+    fetchGames();
+  }, []);
 
   return (
-    <View style={{width: "75%"}}>
+    <BaseScreen>
       <Text style={{fontWeight: "600", fontSize: 16}}>Playdate Games</Text>
       <GameList games={games} />
-    </View>
+    </BaseScreen>
   );
 };
 

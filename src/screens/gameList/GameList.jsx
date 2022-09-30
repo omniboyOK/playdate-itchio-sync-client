@@ -5,7 +5,7 @@ import ActionList from "../components/actionList/ActionList";
 
 const GameList = ({games = []}) => {
   const [viewType, setView] = useState("grid");
-
+  
   const renderItemGrid = ({item, index}) => (
     <ImageBackground
       style={{

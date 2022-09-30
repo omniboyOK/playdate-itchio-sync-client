@@ -29,15 +29,6 @@ export const checkToken = async token => {
   }
 };
 
-export const getAccessTokenAsync = async () => {
-  const accessToken = await AsyncStorage.getItem("userToken");
-
-  if (!accessToken) return null;
-
-  const info = await checkToken(accessToken);
-  return {accessToken, info};
-};
-
 export const asyncLogout = async () => {
   await AsyncStorage.removeItem("userToken");
 };

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## 0.2.0 - 2022-09-30
+
+### Added
+
+- Added React Navigation
+- Added Basic tab navigation
+- Added BaseScreen component for new screens
+
 ## 0.1.0 - 2022-09-24
 
 ### Added

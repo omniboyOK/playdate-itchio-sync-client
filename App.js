@@ -8,15 +8,15 @@
 
 import React from "react";
 import {SafeAreaView, StatusBar, useColorScheme} from "react-native";
-
-import {Colors} from "react-native/Libraries/NewAppScreen";
 import MainScreen from "./src/App";
 
 const App = () => {
   const isDarkMode = useColorScheme() === "dark";
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#312f28",
   };
 
   return (
