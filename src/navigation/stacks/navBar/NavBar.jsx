@@ -1,10 +1,9 @@
-import {useRoute} from "@react-navigation/native";
 import React from "react";
 import {FlatList, Text, TouchableOpacity, View} from "react-native-windows";
 import {MAIN_STACK} from "../../../constants/routes";
 import mainStackRoutes from "../mainStack/mainStackRoutes";
 
-const Item = ({route, title, navigation, highlight}) => {
+const Item = ({route, title, navigation}) => {
   return (
     <TouchableOpacity
       onPress={() =>
