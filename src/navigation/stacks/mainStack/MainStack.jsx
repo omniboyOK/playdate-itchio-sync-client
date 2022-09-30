@@ -1,6 +1,5 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import React from "react";
-import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
 import mainStackRoutes from "./mainStackRoutes";
 
 const Stack = createStackNavigator();
@@ -9,8 +8,13 @@ const MainStack = () => {
   return (
     <>
       <Stack.Navigator
-        initialRouteName={ITCHIO_AUTH_ROUTE}
-        screenOptions={{headerLeft: null}}>
+        screenOptions={{
+          headerLeft: null,
+          headerBackgroundContainerStyle: {
+            backgroundColor: "black",
+            color: "red",
+          },
+        }}>
         {mainStackRoutes.map(item => (
           <Stack.Screen
             name={item.name}

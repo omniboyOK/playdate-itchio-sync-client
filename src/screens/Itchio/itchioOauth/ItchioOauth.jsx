@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {TextInput} from "react-native";
-import useItchioStore from "../../store/itchio";
+import useItchioStore from "../../../store/itchio";
 import {Button, Text, View} from "react-native-windows";
-import {signInAsync} from "../../helper/auth";
+import {signInAsync} from "../../../helper/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import BaseScreen from "../../components/baseScreen/BaseScreen";
+import BaseScreen from "../../../components/baseScreen/BaseScreen";
 
 const ItchioOAuth = () => {
   const [tokenInput, setTokenInput] = useState();
