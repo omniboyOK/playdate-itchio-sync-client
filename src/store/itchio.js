@@ -1,8 +1,9 @@
 import create from "zustand";
+import {fetchOwnedGames} from "../api/itchio";
 import {asyncLogout, checkToken} from "../helper/auth";
 import {getAllPotentialPlaydateGameNames} from "../helper/itchio";
 
-const useItchioStore = create(set => ({
+const useItchioStore = create((set, get) => ({
   gamestore: [],
   token: null,
   awaitingToken: false,
@@ -19,12 +20,23 @@ const useItchioStore = create(set => ({
     }
   },
   setGameStore: async () => {
-    const response = await getAllPotentialPlaydateGameNames();
-    set({gamestore: response});
+    if (!get().gamestore.length) {
+      const response = await getAllPotentialPlaydateGameNames();
+      set({gamestore: response});
+    }
   },
   setOwnedGames: async () => {
-    const response = await getAllPotentialPlaydateGameNames();
-    set({ownedGames: response});
+    if (!get().ownedGames.length) {
+      const response = await fetchOwnedGames(get().token);
+      console.log(response);
+      const games = [];
+      response?.owned_keys?.map(item => {
+        item.game.download_key_id = item.id;
+        console.log(item.game.download_key_id);
+        games.push(item.game);
+      });
+      set({ownedGames: games});
+    }
   },
   setAwait: bool => set({awaitingToken: bool}),
 }));

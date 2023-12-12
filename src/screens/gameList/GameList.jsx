@@ -20,7 +20,7 @@ const GameList = ({games = [], id = ""}) => {
         elevation: 5,
       }}
       resizeMode="cover"
-      source={{uri: item.img}}>
+      source={{uri: item?.img || item?.cover_url}}>
       <View
         style={{
           flexDirection: "column",
@@ -36,7 +36,7 @@ const GameList = ({games = [], id = ""}) => {
             #{index + 1} - {item.title} ({item.id})
           </Text>
         </View>
-        <ActionList />
+        <ActionList game={item} />
       </View>
     </ImageBackground>
   );
@@ -101,7 +101,7 @@ const GameList = ({games = [], id = ""}) => {
           key={"listview"}
           data={games}
           renderItem={renderItemList}
-          keyExtractor={item => item.title + id}
+          keyExtractor={item => item.id + id}
           numColumns={1}
         />
       ) : (
@@ -109,7 +109,7 @@ const GameList = ({games = [], id = ""}) => {
           key={"gridview"}
           data={games}
           renderItem={renderItemGrid}
-          keyExtractor={item => item.title + id}
+          keyExtractor={item => item.id + id}
           numColumns={4}
         />
       )}

@@ -1,8 +1,7 @@
 import fetch from "node-fetch";
 import fs from "fs";
 
-
-
+// Get a list of owned game keys for download
 export async function getGames(authorization) {
   const response = await fetch("https://api.itch.io/profile/owned-keys", {
     headers: {
@@ -12,6 +11,7 @@ export async function getGames(authorization) {
   return response.json();
 }
 
+// Get a game download list
 export async function getGameDownloads(game, authorization) {
   const {game_id, id} = game;
   const response = await fetch(

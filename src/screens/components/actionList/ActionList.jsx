@@ -1,9 +1,18 @@
 import React from "react";
 import {Image, View} from "react-native-windows";
+import BaseIconButton from "../../../components/baseIconButton/BaseIconButton";
+import {downloadGame} from "../../../helper/downloads";
+import useItchioStore from "../../../store/itchio";
 
-const ActionList = () => {
+const ActionList = ({game}) => {
+  const token = useItchioStore(state => state.token);
+
   return (
     <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
+      <BaseIconButton
+        onPress={async () => await downloadGame(game, token)}
+        icon={require("../../../assets/images/download.png")}
+      />
       <Image
         style={{
           resizeMode: "stretch",

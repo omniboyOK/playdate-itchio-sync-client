@@ -5,14 +5,15 @@ import GameList from "../../../gameList/GameList";
 
 const OwnedGames = () => {
   const games = useItchioStore(state => state.ownedGames);
-  const fetchMyGames = useItchioStore(state => state.setOwnedGames);
+  const fetchMyGames = useItchioStore(state => state.setOwnedGames); 
+
   useEffect(() => {
     fetchMyGames();
   }, []);
 
   return (
     <BaseScreen styles={{padding: 15, backgroundColor: "grey"}}>
-      <GameList games={games} id={"_storeGames"} key="ownedGames" />
+      <GameList games={games} id={"_ownedGames"} key="ownedGames" />
     </BaseScreen>
   );
 };

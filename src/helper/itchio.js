@@ -1,20 +1,11 @@
 import DomSelector from "react-native-dom-parser";
-import {
-  fetchGameDownloads,
-  fetchItchioTaggedGames,
-  fetchOwnedGames,
-} from "../api/itchio";
+import {fetchItchioTaggedGames, fetchOwnedGames} from "../api/itchio";
 import {ATTRIBUTES, QUERY} from "../constants/itchio";
 
-export async function getGames(authorization) {
+export async function getOwnedGames(authorization) {
   const response = await fetchOwnedGames(authorization);
-  return response.json();
-}
-
-export async function getGameDownloads(game, authorization) {
-  const {game_id, id} = game;
-  const response = await fetchGameDownloads(game_id, id, authorization);
-  return response.json();
+  const result = await response.json();
+  return result;
 }
 
 export async function getPotentialPlaydateGameNames(page) {
@@ -48,7 +39,7 @@ export async function getAllPotentialPlaydateGameNames() {
   const allNames = new Set();
 
   let loop = true;
-  let page = 8;
+  let page = 0;
 
   while (loop) {
     const names = await getPotentialPlaydateGameNames(page);

@@ -7,12 +7,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Linking} from "react-native-windows";
 import {fetchCredentialsInfo} from "../api/itchio";
 
+// Oauth Login with app token
 export const signInAsync = () => {
   Linking.openURL(
     `https://itch.io/user/oauth?client_id=${ITCHIO_OAUTH_CLIENT}&scope=${ITCHIO_OAUTH_SCOPE}&response_type=token&redirect_uri=${ITCHIO_OAUTH_REDIRECT}`,
   );
 };
 
+// Api key for fetching with global scope
+export const createApiKeyWeb = () => {
+  Linking.openURL("https://itch.io/user/settings/api-keys");
+};
+
+// Check if token is valid and save it
 export const checkToken = async token => {
   try {
     const response = await fetchCredentialsInfo(token);
@@ -29,6 +36,7 @@ export const checkToken = async token => {
   }
 };
 
+// Remove token from local storage
 export const asyncLogout = async () => {
   await AsyncStorage.removeItem("userToken");
 };
