@@ -9,30 +9,39 @@ export async function getOwnedGames(authorization) {
 }
 
 export async function getPotentialPlaydateGameNames(page) {
-  const response = await fetchItchioTaggedGames(page);
-  const {content, num_items} = await response.json();
+  try {
+    const response = await fetchItchioTaggedGames(page);
+    const {content, num_items} = await response.json();
+    if (num_items === 0) {
+      return [];
+    }
 
-  if (num_items === 0) {
+    const dom = DomSelector(content);
+    const games = dom.getElementsByClassName(QUERY.GAME_DATA_CLASS);
+    console.log(games);
+    const processedGames = [];
+    for (let i = 0; i < games.length; i++) {
+      console.log(i);
+      const gameId =
+        games[i]?.attributes[[ATTRIBUTES.GAME_ID]] || "error - unkown id";
+      const titleElement = games[i].getElementsByClassName(
+        QUERY.GAME_TITLE_CLASS,
+      );
+      const imgElement = games[i].getElementsByClassName(
+        QUERY.GAME_IMAGE_CLASS,
+      );
+      let game = {
+        id: gameId,
+        title: titleElement[0].children[0].text,
+        img: imgElement[0]?.attributes[ATTRIBUTES.GAME_IMG] || "",
+      };
+      processedGames.push(game);
+    }
+    return processedGames;
+  } catch (e) {
+    console.log(e);
     return [];
   }
-
-  const dom = DomSelector(content);
-  const games = dom.getElementsByClassName(QUERY.GAME_DATA_CLASS);
-  const processedGames = [];
-  for (let i = 0; i < games.length; i++) {
-    const gameId = games[i].attributes[[ATTRIBUTES.GAME_ID]];
-    const titleElement = games[i].getElementsByClassName(
-      QUERY.GAME_TITLE_CLASS,
-    );
-    const imgElement = games[i].getElementsByClassName(QUERY.GAME_IMAGE_CLASS);
-    let game = {
-      id: gameId,
-      title: titleElement[0].children[0].text,
-      img: imgElement[0].attributes[ATTRIBUTES.GAME_IMG] || "",
-    };
-    processedGames.push(game);
-  }
-  return processedGames;
 }
 
 export async function getAllPotentialPlaydateGameNames() {

@@ -6,6 +6,10 @@ import {getAllPotentialPlaydateGameNames} from "../helper/itchio";
 const useItchioStore = create((set, get) => ({
   gamestore: [],
   token: null,
+  account: {
+    name: "",
+    link: "",
+  },
   awaitingToken: false,
   favouriteGames: [],
   ownedGames: [],
@@ -16,6 +20,7 @@ const useItchioStore = create((set, get) => ({
   validateToken: async token => {
     const result = await checkToken(token);
     if (result) {
+      console.log("ITCHIO LOGIN - OK");
       set({token: token});
     }
   },
@@ -30,11 +35,13 @@ const useItchioStore = create((set, get) => ({
       const response = await fetchOwnedGames(get().token);
       console.log(response);
       const games = [];
-      response?.owned_keys?.map(item => {
-        item.game.download_key_id = item.id;
-        console.log(item.game.download_key_id);
-        games.push(item.game);
-      });
+
+      if (response?.owned_keys.length > 0) {
+        response?.owned_keys?.map(item => {
+          item.game.download_key_id = item.id;
+          games.push(item.game);
+        });
+      }
       set({ownedGames: games});
     }
   },

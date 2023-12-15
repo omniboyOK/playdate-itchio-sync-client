@@ -4,10 +4,11 @@ import useItchioStore from "../../../store/itchio";
 import {Button, Text, View} from "react-native-windows";
 import {createApiKeyWeb} from "../../../helper/auth";
 import BaseScreen from "../../../components/baseScreen/BaseScreen";
+import { Link } from "@react-navigation/native";
 
 const ItchioApiForm = () => {
   const [tokenInput, setTokenInput] = useState();
-  const {token, logout, validateToken, awaitingToken, setAwait} =
+  const {token, account, logout, validateToken, awaitingToken, setAwait} =
     useItchioStore();
 
   const startSignIn = () => {
@@ -25,7 +26,7 @@ const ItchioApiForm = () => {
         margin: 7,
         borderRadius: 14,
       }}>
-      <Text>Success</Text>
+      {account?.name && <Text>Loged In as <Link to={account?.link}>{account?.name}</Link></Text>}
       <Button title="Logout" onPress={() => logout()} />
     </View>
   );

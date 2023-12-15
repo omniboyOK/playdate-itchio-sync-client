@@ -8,7 +8,7 @@ const ItchioGames = () => {
   const fetchGames = useItchioStore(state => state.setGameStore);
   useEffect(() => {
     fetchGames();
-  }, []);
+  }, [games]);
 
   return (
     <BaseScreen styles={{padding: 15, backgroundColor: "grey"}}>

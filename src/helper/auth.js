@@ -5,7 +5,7 @@ import {
 } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Linking} from "react-native-windows";
-import {fetchCredentialsInfo} from "../api/itchio";
+import {fetchAccountInfo, fetchCredentialsInfo} from "../api/itchio";
 
 // Oauth Login with app token
 export const signInAsync = () => {
@@ -28,7 +28,13 @@ export const checkToken = async token => {
 
     if (credentialsInfo.errors?.length) throw Error("Invalid Token");
 
+    const fetchAccountResponse = await fetchAccountInfo(token);
+
+    const {user} = await fetchAccountResponse.json();
+
     await AsyncStorage.setItem("userToken", token);
+    await AsyncStorage.setItem("userName", user?.username || "" );
+    await AsyncStorage.setItem("userProfile", user?.url || "");
 
     return JSON.stringify(credentialsInfo);
   } catch (e) {
@@ -39,4 +45,6 @@ export const checkToken = async token => {
 // Remove token from local storage
 export const asyncLogout = async () => {
   await AsyncStorage.removeItem("userToken");
+  await AsyncStorage.removeItem("userName");
+  await AsyncStorage.removeItem("userProfile");
 };

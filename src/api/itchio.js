@@ -14,6 +14,9 @@ export const fetchItchioTaggedGames = async page =>
 export const fetchCredentialsInfo = async token =>
   await fetch(`https://itch.io/api/1/${token}/credentials/info`);
 
+export const fetchAccountInfo = async token =>
+  await fetch(`https://itch.io/api/1/${token}/me`);
+
 export const fetchOwnedGames = async authorization => {
   const response = await fetch("https://api.itch.io/profile/owned-keys", {
     headers: {
