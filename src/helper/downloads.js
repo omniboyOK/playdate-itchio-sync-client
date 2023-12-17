@@ -1,4 +1,4 @@
-import ReactNativeBlobUtil from "react-native-blob-util";
+// import ReactNativeBlobUtil from "react-native-blob-util";
 import {fetchGameDownloads} from "../api/itchio";
 
 const FETCH_LIMIT = 6291456;
@@ -34,7 +34,7 @@ export async function downloadGame(game, authorization) {
   );
 
   // REPLACE WITH https://github.com/joltup/rn-fetch-blob#download-example-fetch-files-that-need-authorization-token
-  if (upload.size < FETCH_LIMIT) {
+  /* if (upload.size < FETCH_LIMIT) {
     ReactNativeBlobUtil.config({
       session: upload.filename,
       fileCache: true,
@@ -61,7 +61,7 @@ export async function downloadGame(game, authorization) {
         // error handling
         console.table(errorMessage);
       });
-  }
+  } */
   /* let data = "";
 
   ReactNativeBlobUtil.fs.isDir(PATH_TO_THE_FILE).then(isDir => {
