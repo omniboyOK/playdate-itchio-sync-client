@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="630f7ef2-cb71-4370-837a-3f0acf20acfb"
-    Publisher="CN=pc"
+    Name="89c77f4f-9f41-4af4-8901-99a15339c3cb"
+    Publisher="CN=Pablo"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="630f7ef2-cb71-4370-837a-3f0acf20acfb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="89c77f4f-9f41-4af4-8901-99a15339c3cb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>playdateclient</DisplayName>
-    <PublisherDisplayName>pc</PublisherDisplayName>
+    <PublisherDisplayName>Pablo</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
