@@ -13,18 +13,14 @@ import MainScreen from "./src/App";
 const App = () => {
   const isDarkMode = useColorScheme() === "dark";
 
-  const backgroundStyle = {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#312f28",
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? "light-content" : "dark-content"}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
+    <SafeAreaView
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        backgroundColor: "#312f28",
+      }}>
+      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
       <MainScreen />
     </SafeAreaView>
   );
