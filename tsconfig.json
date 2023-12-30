@@ -10,7 +10,9 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
   "exclude": [
     "node_modules",
