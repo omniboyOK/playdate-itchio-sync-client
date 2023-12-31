@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Text, TextInput, View} from "react-native-windows";
-import BaseScreen from "../../components/baseScreen/BaseScreen";
-import usePlaydateStore from "../../store/playdate";
+import BaseScreen from "../../../components/baseScreen/BaseScreen";
+import usePlaydateStore from "../../../store/playdate";
 
 const PlaydateForm = () => {
   const {token, isLoading, login, logout, getOwnedGames} = usePlaydateStore();
@@ -19,7 +19,7 @@ const PlaydateForm = () => {
   };
 
   return (
-    <BaseScreen centerContent>
+    <BaseScreen centerContent styles={undefined}>
       <View style={{width: "50%"}}>
         {token ? (
           <View
