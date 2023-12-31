@@ -5,7 +5,7 @@ import {
 } from "../../../constants/routes";
 import ItchioApiForm from "../../../screens/Itchio/ItchioApiLogin/ItchioForm";
 import ItchioOAuth from "../../../screens/Itchio/itchioOauth/ItchioOauth";
-import PlaydateForm from "../../../screens/playdate/PlaydateForm";
+import PlaydateForm from "../../../screens/playdate/playdateAuth/playdate-auth";
 
 const mainStackRoutes = [
   {
