@@ -1,7 +1,14 @@
+import {FetchResponse} from "../types/apiTypes";
+import {
+  CredentialsInfo,
+  ItchioUserInfo,
+  OwnedGamesResponse,
+} from "../utils/interfaces";
+
 export const fetchGameDownloads = async (
   game_id: string,
   id: string,
-  authorization: string
+  authorization: string,
 ): Promise<Response> => {
   return await fetch(
     `https://api.itch.io/games/${id}/uploads?download_key_id=${game_id}`,
@@ -9,33 +16,33 @@ export const fetchGameDownloads = async (
       headers: {
         authorization,
       },
-    }
+    },
   );
 };
 
 export const fetchItchioTaggedGames = async (
-  page: number
+  page: number,
 ): Promise<Response> => {
   return await fetch(
-    `https://itch.io/games/tag-playdate?page=${page}&format=json`
+    `https://itch.io/games/tag-playdate?page=${page}&format=json`,
   );
 };
 
 export const fetchCredentialsInfo = async (
-  token: string
-): Promise<Response> => {
+  token: string,
+): Promise<FetchResponse<CredentialsInfo>> => {
   return await fetch(`https://itch.io/api/1/${token}/credentials/info`);
 };
 
 export const fetchAccountInfo = async (
-  token: string
-): Promise<Response> => {
+  token: string,
+): Promise<FetchResponse<ItchioUserInfo>> => {
   return await fetch(`https://itch.io/api/1/${token}/me`);
 };
 
 export const fetchOwnedGames = async (
-  authorization: string
-): Promise<any> => {
+  authorization: string,
+): Promise<FetchResponse<OwnedGamesResponse>> => {
   const response = await fetch("https://api.itch.io/profile/owned-keys", {
     headers: {
       authorization,
