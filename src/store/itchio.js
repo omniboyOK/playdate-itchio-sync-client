@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import {fetchOwnedGames} from "../api/itchio";
 import {asyncLogout, checkToken} from "../helper/auth";
 import {getAllPotentialPlaydateGameNames} from "../helper/itchio";

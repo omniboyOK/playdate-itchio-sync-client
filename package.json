@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "windows": "react-native run-windows",
     "pre:ci": "rm -rf ./node_modules",
-    "ci": "yarn install --frozen-lockfile"
+    "ci": "yarn install --frozen-lockfile",
+    "ts:check": "tsc --noEmit"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.21.0",
