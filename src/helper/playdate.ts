@@ -1,15 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DomSelector from "react-native-dom-parser";
 
-export const signInAsync = async token => {
+export const signInAsync = async (token: string): Promise<void> => {
   await AsyncStorage.setItem("playdateToken", token);
 };
 
-export const asyncLogout = async () => {
+export const asyncLogout = async (): Promise<void> => {
   await AsyncStorage.removeItem("playdateToken");
 };
 
-async function getCSRF(url) {
+async function getCSRF(url: string): Promise<string> {
   const response = await fetch(url);
   const text = await response.text();
   const dom = DomSelector(text);
@@ -21,7 +21,10 @@ async function getCSRF(url) {
   return result;
 }
 
-export const login = async (username, password) => {
+export const login = async (
+  username: string,
+  password: string,
+): Promise<string | null> => {
   const token = await getCSRF("https://play.date/signin/");
 
   const body = new URLSearchParams();
@@ -45,8 +48,15 @@ export const login = async (username, password) => {
   return null;
 };
 
-export async function getSideloads() {
-  const games = [];
+interface Game {
+  id: string;
+  date: string;
+  title: string;
+  version: string;
+}
+
+export async function getSideloads(): Promise<Game[]> {
+  const games: Game[] = [];
 
   const response = await fetch("https://play.date/account/", {
     credentials: "include",
@@ -57,7 +67,7 @@ export async function getSideloads() {
   const dom = DomSelector(text);
   const children = dom.getElementByClassName("game-list").children;
 
-  for (var i = 0; i < children.length; i++) {
+  for (let i = 0; i < children.length; i++) {
     const child = children[i];
     const id = child
       .getElementByClassName("action")
@@ -67,7 +77,7 @@ export async function getSideloads() {
     const date = child.getElementByClassName("game-date").text.trim(); // todo: normalize this to ISO8061
     const title = child.getElementByClassName("game-title").text.trim();
     const version = child.getElementByClassName("game-version").text.trim();
-    const game = {
+    const game: Game = {
       id,
       date,
       title,

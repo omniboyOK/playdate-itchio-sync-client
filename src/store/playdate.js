@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import {asyncLogout, getSideloads, login} from "../helper/playdate";
 
 const usePlaydateStore = create(set => ({

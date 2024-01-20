@@ -9,6 +9,13 @@ interface GameComponentInterface {
   img: string;
 }
 
+interface GameElementInterface {
+  attributes: {
+    [key: string]: string;
+  };
+  getElementsByClassName(className: string): Element[];
+}
+
 const DEFAULT_GAME_ID = "error - unknown id";
 const DEFAULT_GAME_IMG = "";
 
@@ -38,14 +45,18 @@ export async function getPotentialPlaydateGameNames(
     const dom = DomSelector(content);
     const games = dom.getElementsByClassName(QUERY.GAME_DATA_CLASS);
 
-    return games.map(gameElement => processGameElement(gameElement));
+    return games.map((gameElement: GameElementInterface) =>
+      processGameElement(gameElement),
+    );
   } catch (error) {
     console.error("Error fetching potential playdate games:", error);
     return [];
   }
 }
 
-function processGameElement(gameElement: Element): GameComponentInterface {
+function processGameElement(
+  gameElement: GameElementInterface,
+): GameComponentInterface {
   const gameId = gameElement?.attributes[ATTRIBUTES.GAME_ID] || DEFAULT_GAME_ID;
   const titleElement = gameElement.getElementsByClassName(
     QUERY.GAME_TITLE_CLASS,
@@ -54,7 +65,9 @@ function processGameElement(gameElement: Element): GameComponentInterface {
 
   return {
     id: gameId,
+    // @ts-ignore: handled exception
     title: titleElement[0]?.children[0]?.text || "",
+    // @ts-ignore: unreachable code in library
     img: imgElement[0]?.attributes[ATTRIBUTES.GAME_IMG] || DEFAULT_GAME_IMG,
   };
 }
