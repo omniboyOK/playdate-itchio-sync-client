@@ -30,6 +30,10 @@
   yarn run macos
   ```
 
+### Contributors
+
+[<kbd><img src="https://github.com/AgustinCollante.png" width="40px;"/></kbd>](https://github.com/AgustinCollante)
+
 ### Ways You Can Contribute
 
 - **Code Contributions**: Feel free to fork the repository, make changes, and submit pull requests. If you're making significant changes or adding new features, please discuss them with us beforehand.
