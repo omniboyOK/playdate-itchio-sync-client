@@ -1,3 +1,9 @@
+# PLAYDATE SYNC CLIENT
+
+This application allows users to sync their games from Itchio to the Playdate device. The process involves logging in to both Playdate and Itchio, viewing available games, and managing the syncing process.
+
+[User Wiki](https://github.com/omniboyOK/playdate-itchio-sync-client/wiki/Walkthrough)
+
 ## Technical Requirements
 
 ### System Requirements
@@ -9,12 +15,15 @@
 
 ### Installation
 
-1. **Clone the Repository**: 
+1. **Clone the Repository**:
+   
    ```bash
    git clone https://github.com/your-username/playdateclient.git
    cd playdateclient
-
-2. **Install Dependencies**
+   ```
+   
+3. **Install Dependencies**
+   
   ```bash
   yarn install
   ```
