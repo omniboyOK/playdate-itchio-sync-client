@@ -1,21 +1,38 @@
-# Playdate Itchio Sync App
+## Technical Requirements
 
-To run this project you need:
+### System Requirements
+- **Node.js**: This project requires Node.js version 16.0.0 or higher.
 
-- React Native Windows dependencies
-- Yarn
-- Node 16.15.1
+### Dependencies
+- **React Native**: Built with React Native, ensure you have the React Native CLI installed for development.
+- **Yarn**: Uses Yarn for efficient package management. Ensure Yarn is installed to manage dependencies.
 
-There is already set up scripts for installing node dependencies
+### Installation
 
-### If already installed dependencies
+1. **Clone the Repository**: 
+   ```bash
+   git clone https://github.com/your-username/playdateclient.git
+   cd playdateclient
 
-`yarn run pre:ci`
+2. **Install Dependencies**
+  ```bash
+  yarn install
+  ```
 
-### Installing node modules from scratch
+### Running the Project
 
-`yarn run ci`
+**Windows**
+  ```bash
+  yarn run windows
+  ```
+**Mac**
+  ```bash
+  yarn run macos
+  ```
 
-### Running project
+### Ways You Can Contribute
 
-`yarn run windows`
+- **Code Contributions**: Feel free to fork the repository, make changes, and submit pull requests. If you're making significant changes or adding new features, please discuss them with us beforehand.
+- **Reporting Issues**: If you find bugs or have feature requests, please create an issue. This greatly helps in improving the project.
+- **Documentation**: Help in improving or translating the documentation is always appreciated.
+- **Community Support**: Answering questions or helping others in the community can be a huge contribution.
