@@ -6,8 +6,9 @@ import {
   ITCHIO_STORE_ROUTE,
 } from "../../../constants/routes";
 import ItchioGames from "../../../screens/Itchio/ItchioGames/storeGames/ItchioGames";
+import { MainStackParamList } from "../../types";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<MainStackParamList>();
 
 const MainStack = () => {
   return (

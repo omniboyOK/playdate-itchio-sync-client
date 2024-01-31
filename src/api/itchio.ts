@@ -1,9 +1,9 @@
-import {FetchResponse} from "../types/apiTypes";
+import {FetchResponse} from "../types/api.types";
 import {
   CredentialsInfo,
   ItchioUserInfo,
   OwnedGamesResponse,
-} from "../utils/interfaces";
+} from "../types/itchio.types";
 
 export const fetchGameDownloads = async (
   game_id: string,
