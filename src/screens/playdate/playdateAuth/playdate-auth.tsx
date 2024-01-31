@@ -2,20 +2,36 @@ import React, {useEffect, useState} from "react";
 import {Button, Text, TextInput, View} from "react-native-windows";
 import BaseScreen from "../../../components/baseScreen/BaseScreen";
 import usePlaydateStore from "../../../store/playdate";
+import {NativeSyntheticEvent, TextInputChangeEventData} from "react-native";
+import {useNavigation} from "@react-navigation/native";
+import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
 
 const PlaydateForm = () => {
-  const {token, isLoading, login, logout, getOwnedGames} = usePlaydateStore();
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
+  const navigation = useNavigation();
+  const {token, isLoading, login, logout} = usePlaydateStore();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   useEffect(() => {
     if (token) {
-      getOwnedGames();
+      // @ts-ignore
+      navigation.navigate(ITCHIO_AUTH_ROUTE);
     }
-  });
+  }, [token, navigation]);
 
   const submit = () => {
     login(email, password);
+  };
+
+  const handlePasswordChange = (
+    e: NativeSyntheticEvent<TextInputChangeEventData>,
+  ) => {
+    setPassword(e.nativeEvent.text);
+  };
+
+  const handleEmailChange = (
+    e: NativeSyntheticEvent<TextInputChangeEventData>,
+  ) => {
+    setEmail(e.nativeEvent.text);
   };
 
   return (
@@ -48,7 +64,7 @@ const PlaydateForm = () => {
             </Text>
             <TextInput
               style={{borderColor: "black", borderRadius: 5}}
-              onChange={e => setEmail(e.currentTarget.value)}
+              onChange={handleEmailChange}
               value={email}
               placeholder="email"
               textContentType="emailAddress"
@@ -56,7 +72,7 @@ const PlaydateForm = () => {
             />
             <TextInput
               style={{marginTop: 5, borderColor: "black", borderRadius: 5}}
-              onChange={e => setPassword(e.currentTarget.value)}
+              onChange={handlePasswordChange}
               textContentType="password"
               placeholder="password"
               secureTextEntry={true}

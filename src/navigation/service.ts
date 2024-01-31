@@ -1,7 +1,9 @@
 import React from "react";
-import { NavigationContainerRef } from "@react-navigation/native"; // Import from your navigation library
+import {NavigationContainerRef} from "@react-navigation/native";
+import {RootStackParamList} from "./types";
 
-export const navigationRef: React.RefObject<NavigationContainerRef<object>> = React.createRef();
+export const navigationRef =
+  React.createRef<NavigationContainerRef<RootStackParamList>>();
 
 export const useNavigationRef = () => {
   return navigationRef;
