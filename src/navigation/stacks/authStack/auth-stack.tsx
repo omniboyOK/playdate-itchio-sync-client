@@ -12,7 +12,11 @@ const Stack = createStackNavigator<AuthStackParamList>();
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName={PLAYDATE_AUTH_ROUTE}>
+    <Stack.Navigator
+      initialRouteName={PLAYDATE_AUTH_ROUTE}
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen
         name={PLAYDATE_AUTH_ROUTE}
         component={PlaydateForm}
