@@ -3,7 +3,7 @@ import {TextInput} from "react-native";
 import useItchioStore from "../../../store/itchio";
 import {Button, Text, View} from "react-native-windows";
 import {createApiKeyWeb} from "../../../helper/auth";
-import BaseScreen from "../../../components/baseScreen/BaseScreen";
+import {BaseScreen} from "components";
 import { Link } from "@react-navigation/native";
 
 const ItchioApiForm = () => {
