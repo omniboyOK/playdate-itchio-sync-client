@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from "react";
-import {Button, Text, TextInput, View} from "react-native-windows";
+import {Text, View, Image, useWindowDimensions} from "react-native-windows";
 import usePlaydateStore from "../../../store/playdate";
-import {NativeSyntheticEvent, TextInputChangeEventData} from "react-native";
+import {BaseTextInput} from "../../../components/baseTextInput/baseTextInput";
+import BgShape from "../../../assets/images/bg-shape-x2.png";
+import {TouchableOpacity} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
-import { BaseScreen } from "components";
 
 const PlaydateForm = () => {
+  const {token, login, isLoading} = usePlaydateStore();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const {height, width} = useWindowDimensions();
   const navigation = useNavigation();
-  const {token, isLoading, login, logout} = usePlaydateStore();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+
   useEffect(() => {
     if (token) {
       // @ts-ignore
@@ -22,69 +25,63 @@ const PlaydateForm = () => {
     login(email, password);
   };
 
-  const handlePasswordChange = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>,
-  ) => {
-    setPassword(e.nativeEvent.text);
-  };
-
-  const handleEmailChange = (
-    e: NativeSyntheticEvent<TextInputChangeEventData>,
-  ) => {
-    setEmail(e.nativeEvent.text);
-  };
+  useEffect(() => {}, [width, isLoading]);
 
   return (
-    <BaseScreen centerContent styles={undefined}>
-      <View style={{width: "50%"}}>
-        {token ? (
-          <View
-            style={{
-              flexDirection: "column",
-              backgroundColor: "#ffc833",
-              padding: 15,
-              margin: 7,
-              borderRadius: 14,
-            }}>
-            <Text>Success</Text>
-            <Button title="Logout" onPress={() => logout()} />
+    <View
+      style={{
+        flexDirection: "row",
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "#212223",
+      }}>
+      <Image
+        source={BgShape}
+        style={{
+          height: height,
+          width: "100%",
+          position: "absolute",
+          right: width / 2.7,
+        }}
+        resizeMode="contain"
+      />
+      <View
+        style={{
+          paddingLeft: 30,
+          justifyContent: "center",
+          gap: 28,
+        }}>
+        <Text style={{fontSize: 24, fontWeight: "bold"}}>
+          Welcome to Playdate Sync App
+        </Text>
+        <Text style={{fontSize: 20, fontWeight: "bold"}}>Playdate Login</Text>
+        <BaseTextInput value={email} setValue={setEmail} placeholder="Email" />
+        <BaseTextInput
+          value={password}
+          setValue={setPassword}
+          placeholder="Contraseña"
+        />
+        <TouchableOpacity
+          onPress={submit}
+          style={{
+            backgroundColor: "#FFC833",
+            height: 48,
+            width: 383,
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: 6,
+          }}>
+          <Text style={{color: "black", fontSize: 18, fontWeight: "500"}}>
+            Login
+          </Text>
+        </TouchableOpacity>
+        {isLoading ? (
+          <View>
+            <Text>Cargando...</Text>
           </View>
-        ) : (
-          <View
-            style={{
-              flexDirection: "column",
-              backgroundColor: "#ffc833",
-              padding: 15,
-              margin: 7,
-              borderRadius: 14,
-            }}>
-            <Text
-              style={{color: "#212223", fontWeight: "600", marginBottom: 5}}>
-              Playdate Login
-            </Text>
-            <TextInput
-              style={{borderColor: "black", borderRadius: 5}}
-              onChange={handleEmailChange}
-              value={email}
-              placeholder="email"
-              textContentType="emailAddress"
-              editable={!isLoading}
-            />
-            <TextInput
-              style={{marginTop: 5, borderColor: "black", borderRadius: 5}}
-              onChange={handlePasswordChange}
-              textContentType="password"
-              placeholder="password"
-              secureTextEntry={true}
-              value={password}
-              editable={!isLoading}
-            />
-            <Button title="Login" onPress={submit} />
-            {isLoading ? <Text>Connecting...</Text> : null}
-          </View>
-        )}
+        ) : null}
       </View>
-    </BaseScreen>
+    </View>
   );
 };
 

@@ -14,6 +14,7 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerShown: false,
         headerBackgroundContainerStyle: {
           backgroundColor: "black",
         },
