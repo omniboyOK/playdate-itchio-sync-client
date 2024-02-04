@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import BaseScreen from "../../../../components/baseScreen/BaseScreen";
+import {BaseScreen} from "components";
 import useItchioStore from "../../../../store/itchio";
 import GameList from "../../../gameList/GameList";
 

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {FlatList, ImageBackground, Text, View} from "react-native-windows";
-import BaseIconButton from "../../components/baseIconButton/BaseIconButton";
+import {BaseIconButton} from "components";
 import ActionList from "../components/actionList/ActionList";
 
 const GameList = ({games = [], id = ""}) => {
