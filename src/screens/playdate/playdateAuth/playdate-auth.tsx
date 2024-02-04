@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Button, Text, TextInput, View} from "react-native-windows";
-import BaseScreen from "../../../components/baseScreen/BaseScreen";
 import usePlaydateStore from "../../../store/playdate";
 import {NativeSyntheticEvent, TextInputChangeEventData} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
+import { BaseScreen } from "components";
 
 const PlaydateForm = () => {
   const navigation = useNavigation();

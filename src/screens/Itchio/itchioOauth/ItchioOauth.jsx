@@ -3,7 +3,7 @@ import {TextInput} from "react-native";
 import useItchioStore from "../../../store/itchio";
 import {Button, Text, View} from "react-native-windows";
 import {signInAsync} from "../../../helper/auth";
-import BaseScreen from "../../../components/baseScreen/BaseScreen";
+import {BaseScreen} from "components";
 
 const ItchioOAuth = () => {
   const [tokenInput, setTokenInput] = useState();

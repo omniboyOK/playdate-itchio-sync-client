@@ -1,6 +1,6 @@
 import React from "react";
 import {Image, View} from "react-native-windows";
-import BaseIconButton from "../../../components/baseIconButton/BaseIconButton";
+import {BaseIconButton} from "components";
 // import {downloadGame} from "../../../helper/downloads";
 import useItchioStore from "../../../store/itchio";
 
