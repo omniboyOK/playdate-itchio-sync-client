@@ -1,43 +1,55 @@
 import React from "react";
-import {TextInput, View} from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  View,
+} from "react-native-windows";
 
 interface BaseinputTextProps {
   value: string | undefined;
   setValue: (e: string) => void;
   placeholder?: string;
+  _textInputProps?: TextInputProps;
 }
 
 export const BaseTextInput = ({
   value,
   setValue,
   placeholder,
+  _textInputProps,
 }: BaseinputTextProps) => {
   return (
-    <View
-      style={{
-        backgroundColor: "#FFFFFF",
-        height: 48,
-        width: 383,
-        justifyContent: "center",
-        borderRadius: 6,
-      }}>
+    <View style={styles.container}>
       <TextInput
-        style={{
-          backgroundColor: "#FFFFFF",
-          borderBottomWidth: 0,
-          color: "#707070",
-          borderRadius: 5,
-          width: 383,
-          fontSize: 16,
-        }}
+        style={styles.textInput}
         clearButtonMode="never"
-        onChangeText={e => setValue(e)}
+        onChangeText={setValue} // Simplified for cleaner code
         value={value}
         placeholder={placeholder}
-        placeholderTextColor="#212223"
+        placeholderTextColor="#707070"
         editable={true}
-        clearTextOnFocus={false}
+        {..._textInputProps}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 6,
+    maxHeight: 48,
+  },
+  textInput: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 0,
+    color: "#212223",
+    borderRadius: 5,
+    fontSize: 16,
+    padding: 12,
+  },
+});

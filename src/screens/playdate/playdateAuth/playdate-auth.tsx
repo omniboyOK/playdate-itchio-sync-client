@@ -59,7 +59,8 @@ const PlaydateForm = () => {
         <BaseTextInput
           value={password}
           setValue={setPassword}
-          placeholder="Contraseña"
+          placeholder="Password"
+          _textInputProps={{secureTextEntry: true, clearTextOnFocus: true}}
         />
         <TouchableOpacity
           onPress={submit}
@@ -76,8 +77,8 @@ const PlaydateForm = () => {
           </Text>
         </TouchableOpacity>
         {isLoading ? (
-          <View>
-            <Text>Cargando...</Text>
+          <View style={{alignSelf: "center"}}>
+            <Text>Connecting...</Text>
           </View>
         ) : null}
       </View>
