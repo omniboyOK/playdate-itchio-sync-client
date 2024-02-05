@@ -1,7 +1,6 @@
 #pragma once
 
 #include "App.xaml.g.h"
-
 #include <CppWinRTIncludes.h>
 
 namespace activation = winrt::Windows::ApplicationModel::Activation;

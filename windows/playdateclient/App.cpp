@@ -4,11 +4,14 @@
 
 #include "AutolinkedNativeModules.g.h"
 #include "ReactPackageProvider.h"
+#include <winrt/Windows.UI.ViewManagement.h>
 
 using namespace winrt;
 using namespace xaml;
 using namespace xaml::Controls;
 using namespace xaml::Navigation;
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::ViewManagement;
 
 using namespace Windows::ApplicationModel;
 namespace winrt::playdateclient::implementation
@@ -53,7 +56,26 @@ void App::OnLaunched(activation::LaunchActivatedEventArgs const& e)
     super::OnLaunched(e);
 
     Frame rootFrame = Window::Current().Content().as<Frame>();
-    rootFrame.Navigate(xaml_typename<MainPage>(), box_value(e.Arguments()));
+    if (!rootFrame)
+    {
+        // Frame not yet created, create and navigate as necessary
+        rootFrame = Frame{};
+        Window::Current().Content(rootFrame);
+    }
+
+    if (!e.PrelaunchActivated())
+    {
+        if (rootFrame.Content() == nullptr)
+        {
+            rootFrame.Navigate(xaml_typename<MainPage>(), box_value(e.Arguments()));
+        }
+        // Ensure the current window is active
+        Window::Current().Activate();
+    }
+
+    // Set the preferred minimum size
+    auto applicationView = ApplicationView::GetForCurrentView();
+    applicationView.SetPreferredMinSize(Size{ 500, 500 });
 }
 
 /// <summary>
