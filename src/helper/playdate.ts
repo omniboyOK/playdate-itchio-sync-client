@@ -12,13 +12,13 @@ export const asyncLogout = async (): Promise<void> => {
 async function getCSRF(url: string): Promise<string> {
   const response = await fetch(url);
   const text = await response.text();
-  const dom = DomSelector(text);
 
-  const result = dom.getElementsByName("csrfmiddlewaretoken")[0].attributes[
-    "value"
-  ];
+  const regex = /name="csrfmiddlewaretoken" value="([^"]+)"/;
 
-  return result;
+  const matches = regex.exec(text);
+
+  const csrfToken = matches?.length ? matches[1] : "";
+  return csrfToken;
 }
 
 export const login = async (
@@ -32,7 +32,7 @@ export const login = async (
   body.append("username", username);
   body.append("password", password);
 
-  const result = await fetch("https://play.date/signin/", {
+  const result = await fetch("https://play.date/", {
     body: body.toString(),
     method: "POST",
     headers: {
@@ -57,7 +57,6 @@ interface Game {
 
 export async function getSideloads(): Promise<Game[]> {
   const games: Game[] = [];
-
   const response = await fetch("https://play.date/account/", {
     credentials: "include",
   });
