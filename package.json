@@ -47,11 +47,13 @@
     "metro-config": "^0.72.2",
     "metro-react-native-babel-preset": "^0.72.1",
     "react-test-renderer": "18.1.0"
+    
   },
   "jest": {
     "preset": "react-native"
   },
   "volta": {
     "node": "16.20.2"
-  }
+  },
+  "packageManager": "yarn@3.8.0"
 }
