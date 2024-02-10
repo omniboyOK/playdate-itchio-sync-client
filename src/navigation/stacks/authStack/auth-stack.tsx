@@ -1,8 +1,6 @@
 import {createStackNavigator} from "@react-navigation/stack";
 import React from "react";
-import {
-  ITCHIO_AUTH_ROUTE,
-} from "../../../constants/routes";
+import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
 import ItchioOAuth from "../../../screens/Itchio/itchioOauth/ItchioOauth";
 import {AuthStackParamList} from "../../types";
 
