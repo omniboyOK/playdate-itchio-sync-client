@@ -2,20 +2,12 @@ import {Linking} from "react-native-windows";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {fetchAccountInfo, fetchCredentialsInfo} from "../api/itchio";
 import {
-  ITCHIO_OAUTH_CLIENT,
-  ITCHIO_OAUTH_REDIRECT,
-  ITCHIO_OAUTH_SCOPE,
+  ITCHIO_LOGIN_URL
 } from "@env";
 
 // Oauth Login with app token
 export const signInAsync = (): void => {
-  const clientId = encodeURIComponent(ITCHIO_OAUTH_CLIENT);
-  const scope = encodeURIComponent(ITCHIO_OAUTH_SCOPE);
-  const redirectUri = encodeURIComponent(ITCHIO_OAUTH_REDIRECT);
-
-  const url = `https://itch.io/user/oauth?client_id=${clientId}&scope=${scope}&response_type=token&redirect_uri=${redirectUri}`;
-
-  Linking.openURL(url);
+  Linking.openURL(ITCHIO_LOGIN_URL);
 };
 
 // Check if token is valid and save it

@@ -4,9 +4,11 @@ import {
   FAVOURITE_GAMES_ROUTE,
   ITCHIO_OWNED_ROUTE,
   ITCHIO_STORE_ROUTE,
+  PLAYDATE_AUTH_ROUTE,
 } from "../../../constants/routes";
 import ItchioGames from "../../../screens/Itchio/ItchioGames/storeGames/ItchioGames";
-import { MainStackParamList } from "../../types";
+import {MainStackParamList} from "../../types";
+import PlaydateForm from "screens/playdate/playdateAuth/playdate-auth";
 
 const Stack = createStackNavigator<MainStackParamList>();
 
@@ -33,6 +35,12 @@ const MainStack = () => {
         name={ITCHIO_STORE_ROUTE}
         component={ItchioGames} // Replace with store games
         key={ITCHIO_STORE_ROUTE}
+      />
+      <Stack.Screen
+        name={PLAYDATE_AUTH_ROUTE}
+        component={PlaydateForm}
+        key={PLAYDATE_AUTH_ROUTE}
+        options={{}}
       />
     </Stack.Navigator>
   );
