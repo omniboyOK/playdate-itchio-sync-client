@@ -1,3 +1,5 @@
+import {ACRYLIC_COLOR} from "constants/colors";
+import {BASE_CARD_HEIGHT, BASE_CARD_WIDTH, CARD_PADDING} from "constants/theme";
 import React from "react";
 import {StyleSheet, View} from "react-native-windows";
 
@@ -11,13 +13,11 @@ const BaseCard: React.FC<BaseCardProps> = ({children}) => {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: "black",
-    height: 180,
-    width: 118,
-    borderColor: "#FFC833",
-    borderWidth: 2,
+    backgroundColor: ACRYLIC_COLOR,
+    height: BASE_CARD_HEIGHT,
+    width: BASE_CARD_WIDTH,
     borderRadius: 8,
-    padding: 5,
+    padding: CARD_PADDING,
   },
 });
 

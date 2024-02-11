@@ -1,5 +1,6 @@
+import {BACKGROUND_COLOR} from "constants/colors";
 import React from "react";
-import {StyleProp, View, ViewStyle} from "react-native-windows";
+import {StyleProp, StyleSheet, View, ViewStyle} from "react-native-windows";
 
 type BaseScreenProps = {
   children: React.ReactNode;
@@ -7,11 +8,14 @@ type BaseScreenProps = {
 };
 
 const BaseScreen: React.FC<BaseScreenProps> = ({children}) => {
-  return (
-    <View style={{flex: 1, backgroundColor: "#212223", padding: 25}}>
-      {children}
-    </View>
-  );
+  return <View style={styles.container}>{children}</View>;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: BACKGROUND_COLOR,
+  },
+});
 
 export default BaseScreen;

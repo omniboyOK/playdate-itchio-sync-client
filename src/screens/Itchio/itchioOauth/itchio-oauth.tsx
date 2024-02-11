@@ -11,6 +11,7 @@ import BgShape from "../../../assets/images/bg-shape.svg";
 import useItchioStore from "store/itchio";
 import {signInAsync} from "helper/auth";
 import BaseButton from "components/baseButton/BaseButton";
+import {BACKGROUND_COLOR} from "constants/colors";
 
 const ItchioOauth = () => {
   const {height, width} = useWindowDimensions();
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#212223",
+    backgroundColor: BACKGROUND_COLOR,
   },
   imageStyle: {
     position: "absolute",

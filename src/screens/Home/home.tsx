@@ -12,13 +12,21 @@ import {
 // TODO: Fix type safety
 // @ts-ignore
 const Home = ({navigation}) => {
-  const games = useItchioStore(state => state.gamestore);
-  const fetchGames = useItchioStore(state => state.setGameStore);
-  const isLoading = useItchioStore(state => state.loadingGames);
+  const {
+    gamestore,
+    ownedGames,
+    favouriteGames,
+    setGameStore,
+    setOwnedGames,
+    loadingOwned,
+    loadingStore,
+    loadingFavourites,
+  } = useItchioStore();
 
   useEffect(() => {
-    fetchGames();
-  }, [games]);
+    setOwnedGames();
+    setGameStore();
+  }, []);
 
   const handleStoreNavigation = () => navigation.navigate(ITCHIO_STORE_ROUTE);
   const handleFavouriteNavigation = () =>
@@ -28,27 +36,27 @@ const Home = ({navigation}) => {
   return (
     <BaseScreen>
       <ScrollView>
-        <View style={{flex: 1, gap: 15}}>
+        <View style={{flex: 1, gap: 15, marginLeft: 25, marginVertical: 25}}>
           <ShortList
-            games={games}
+            games={gamestore}
             number={5}
             title={"Itchio Store"}
-            loading={isLoading}
+            loading={loadingStore}
             onPress={handleStoreNavigation}
           />
 
           <ShortList
-            games={[]}
-            number={0}
+            games={ownedGames}
+            number={5}
             title={"My Games"}
-            loading={false}
+            loading={loadingOwned}
             onPress={handleOwnedNavigation}
           />
           <ShortList
-            games={[]}
-            number={0}
+            games={favouriteGames}
+            number={5}
             title={"Favourite Games"}
-            loading={false}
+            loading={loadingFavourites}
             onPress={handleFavouriteNavigation}
           />
         </View>

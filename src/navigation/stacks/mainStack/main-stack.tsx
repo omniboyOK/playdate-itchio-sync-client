@@ -12,6 +12,8 @@ import {MainStackParamList} from "../../types";
 import PlaydateForm from "../../../screens/playdate/playdateAuth/playdate-auth";
 import Home from "screens/Home/home";
 import {TextStyle, ViewStyle} from "react-native-windows";
+import FavouriteGames from "screens/Itchio/ItchioGames/favouriteGames/favourite-games";
+import OwnedGames from "screens/Itchio/ItchioGames/ownedGames/owned-games";
 
 const Stack = createStackNavigator<MainStackParamList>();
 
@@ -53,13 +55,13 @@ const MainStack = () => {
       />
       <Stack.Screen
         name={ITCHIO_OWNED_ROUTE}
-        component={ItchioGames}
+        component={OwnedGames}
         key={ITCHIO_OWNED_ROUTE}
         options={createCustomHeaderConfig("My Games")}
       />
       <Stack.Screen
         name={FAVOURITE_GAMES_ROUTE}
-        component={ItchioGames} // TODO: Replace with favourite games
+        component={FavouriteGames} // TODO: Replace with favourite games
         key={FAVOURITE_GAMES_ROUTE}
         options={createCustomHeaderConfig("Favourite Games")}
       />

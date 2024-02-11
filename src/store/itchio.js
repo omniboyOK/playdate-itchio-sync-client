@@ -5,15 +5,17 @@ import { getPotentialPlaydateGameNames } from "../helper/itchio";
 
 const useItchioStore = create((set, get) => ({
   gamestore: [],
-  loadingGames: false,
+  favouriteGames: [],
+  ownedGames: [],
+  loadingStore: false,
+  loadingOwned: false,
+  loadingFavourites: false,
   token: null,
   account: {
     name: "",
     link: "",
   },
   awaitingToken: false,
-  favouriteGames: [],
-  ownedGames: [],
   logout: async () => {
     set({ token: null, awaitingToken: false });
     await asyncLogout();
@@ -27,15 +29,16 @@ const useItchioStore = create((set, get) => ({
     set({ awaitingToken: false });
   },
   setGameStore: async () => {
-    set({ loadingGames: true });
+    set({ loadingStore: true });
     if (!get().gamestore.length) {
       const response = await getPotentialPlaydateGameNames(1);
       set({ gamestore: response });
     }
-    set({ loadingGames: false });
+    set({ loadingStore: false });
 
   },
   setOwnedGames: async () => {
+    set({ loadingOwned: true });
     if (!get().ownedGames.length) {
       const response = await fetchOwnedGames(get().token);
       console.log(response);
@@ -49,6 +52,7 @@ const useItchioStore = create((set, get) => ({
       }
       set({ ownedGames: games });
     }
+    set({ loadingOwned: false });
   },
   setAwait: bool => set({ awaitingToken: bool }),
 }));

@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react";
 import {Text, View, Image, useWindowDimensions} from "react-native-windows";
 import usePlaydateStore from "../../../store/playdate";
 import {BaseTextInput} from "../../../components/baseTextInput/baseTextInput";
-import BaseButton from "../../../components/baseButton/BaseButton"; // Asegúrate de que la ruta de importación sea correcta
+import BaseButton from "../../../components/baseButton/BaseButton";
 import BgShape from "../../../assets/images/bg-shape2.svg";
 import {useNavigation} from "@react-navigation/native";
 import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
-import styles from "./playdate-auth.styles"; // Asegúrate de que la ruta de importación sea correcta
+import {StyleSheet} from "react-native";
+import {BACKGROUND_COLOR} from "constants/colors";
 
 const PlaydateForm = () => {
   const {token, login, isLoading} = usePlaydateStore();
@@ -60,5 +61,47 @@ const PlaydateForm = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: BACKGROUND_COLOR,
+  },
+  imageBackground: {
+    width: "100%",
+    position: "absolute",
+  },
+  contentContainer: {
+    paddingLeft: 30,
+    justifyContent: "center",
+    gap: 28,
+  },
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  loginText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  buttonContainer: {
+    backgroundColor: "#FFC833",
+    height: 48,
+    width: 383,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  connectingContainer: {
+    alignSelf: "center",
+  },
+});
 
 export default PlaydateForm;

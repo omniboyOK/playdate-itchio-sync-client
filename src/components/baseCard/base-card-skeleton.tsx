@@ -1,3 +1,5 @@
+import {ACRYLIC_COLOR} from "constants/colors";
+import {BASE_CARD_HEIGHT, BASE_CARD_WIDTH, CARD_PADDING} from "constants/theme";
 import React, {useEffect, useRef} from "react";
 import {Animated, StyleSheet} from "react-native-windows";
 
@@ -34,13 +36,11 @@ const BaseCardSkeleton = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 150,
-    width: 118,
-    borderColor: "grey",
-    borderWidth: 2,
+    backgroundColor: ACRYLIC_COLOR,
+    height: BASE_CARD_HEIGHT,
+    width: BASE_CARD_WIDTH,
     borderRadius: 8,
-    padding: 5,
-    margin: 5,
+    padding: CARD_PADDING,
   },
 });
 

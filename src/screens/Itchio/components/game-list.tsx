@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  FlatList,
-  ListRenderItemInfo,
-} from "react-native-windows";
+import {StyleSheet, FlatList, ListRenderItemInfo, View} from "react-native";
 import {Game} from "types/itchio.types";
 import BaseEmptyCard from "components/baseEmptyCard/base-empty-card";
 import BaseCardSkeleton from "components/baseCard/base-card-skeleton";
@@ -15,7 +11,9 @@ type GameListProps = {
 };
 
 const renderItem = ({item}: ListRenderItemInfo<Game>) => (
-  <BaseGameCard game={item} />
+  <View style={styles.cardWrapper}>
+    <BaseGameCard game={item} />
+  </View>
 );
 
 const GameList: React.FC<GameListProps> = ({games, loading}) => {
@@ -27,9 +25,8 @@ const GameList: React.FC<GameListProps> = ({games, loading}) => {
     <FlatList
       data={games}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
-      initialNumToRender={10}
-      numColumns={1}
+      keyExtractor={item => item.id.toString()}
+      numColumns={5}
       contentContainerStyle={styles.container}
       ListEmptyComponent={<BaseEmptyCard />}
     />
@@ -38,10 +35,10 @@ const GameList: React.FC<GameListProps> = ({games, loading}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    gap: 5,
   },
   cardWrapper: {
-    margin: 5,
+    margin: 5
   },
 });
 

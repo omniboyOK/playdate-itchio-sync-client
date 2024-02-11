@@ -1,3 +1,5 @@
+import {ACRYLIC_COLOR} from "constants/colors";
+import {BASE_CARD_HEIGHT, BASE_CARD_WIDTH, CARD_PADDING} from "constants/theme";
 import React from "react";
 import {StyleSheet, Text, View} from "react-native-windows";
 
@@ -13,14 +15,11 @@ const BaseEmptyCard: React.FC = () => {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: "#212223",
-    height: 150,
-    width: 118,
-    borderColor: "grey",
-    borderWidth: 2,
+    backgroundColor: ACRYLIC_COLOR,
+    height: BASE_CARD_HEIGHT,
+    width: BASE_CARD_WIDTH,
     borderRadius: 8,
-    padding: 5,
-    borderStyle: "dotted",
+    padding: CARD_PADDING,
     justifyContent: "center",
   },
 });
