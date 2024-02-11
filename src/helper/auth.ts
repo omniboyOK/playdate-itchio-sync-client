@@ -1,9 +1,7 @@
 import {Linking} from "react-native-windows";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {fetchAccountInfo, fetchCredentialsInfo} from "../api/itchio";
-import {
-  ITCHIO_LOGIN_URL
-} from "@env";
+import {ITCHIO_LOGIN_URL} from "@env";
 
 // Oauth Login with app token
 export const signInAsync = (): void => {

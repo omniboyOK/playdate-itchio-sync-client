@@ -1,7 +1,11 @@
 import DomSelector from "react-native-dom-parser";
 import {fetchItchioTaggedGames, fetchOwnedGames} from "../api/itchio";
 import {ATTRIBUTES, QUERY} from "../constants/itchio";
-import { GameDOMElement, ItchioGame, OwnedGamesResponse } from "../types/itchio.types";
+import {
+  GameDOMElement,
+  ItchioGame,
+  OwnedGamesResponse,
+} from "../types/itchio.types";
 
 const GAME_ID_ERROR = "error - unknown id";
 const DEFAULT_GAME_IMG = "";
@@ -41,17 +45,14 @@ export async function getPotentialPlaydateGameNames(
   }
 }
 
-function processGameElement(
-  gameElement: GameDOMElement,
-): ItchioGame {
+function processGameElement(gameElement: GameDOMElement): ItchioGame {
   const gameId = gameElement?.attributes[ATTRIBUTES.GAME_ID] || GAME_ID_ERROR;
   const titleElement = gameElement.getElementsByClassName(
     QUERY.GAME_TITLE_CLASS,
   );
   const imgElement = gameElement.getElementsByClassName(QUERY.GAME_IMAGE_CLASS);
-
   return {
-    id:  parseInt(gameId),
+    id: parseInt(gameId),
     // @ts-ignore: handled exception
     title: titleElement[0]?.children[0]?.text || "",
     // @ts-ignore: unreachable code in library
