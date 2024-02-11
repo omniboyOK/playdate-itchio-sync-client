@@ -11,8 +11,8 @@ const BaseCard: React.FC<BaseCardProps> = ({children}) => {
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: "#212223",
-    height: 150,
+    backgroundColor: "black",
+    height: 180,
     width: 118,
     borderColor: "#FFC833",
     borderWidth: 2,

@@ -3,8 +3,8 @@ import {
   ITCHIO_AUTH_ROUTE,
   PLAYDATE_AUTH_ROUTE,
 } from "../../../constants/routes";
-import ItchioApiForm from "../../../screens/Itchio/ItchioApiLogin/ItchioForm";
-import ItchioOAuth from "../../../screens/Itchio/itchioOauth/ItchioOauth";
+import ItchioApiForm from "../../../screens/Itchio/ItchioApiLogin/itchio-form";
+import ItchioOAuth from "../../../screens/Itchio/itchioOauth/itchio-oauth";
 import PlaydateForm from "../../../screens/playdate/playdateAuth/playdate-auth";
 
 const mainStackRoutes = [

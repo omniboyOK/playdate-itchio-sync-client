@@ -11,10 +11,8 @@ const ItchioGames = () => {
   }, [games]);
 
   return (
-    <BaseScreen
-      styles={{backgroundColor: "#212223", padding: 25 }}
-      centerContent={undefined}>
-      <GameList games={games} />
+    <BaseScreen styles={{backgroundColor: "#212223", padding: 25}}>
+      <GameList games={games} loading={false} />
     </BaseScreen>
   );
 };

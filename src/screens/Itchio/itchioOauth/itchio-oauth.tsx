@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {Text, View, Image, useWindowDimensions} from "react-native-windows";
+import React, {useState} from "react";
+import {
+  Text,
+  View,
+  Image,
+  useWindowDimensions,
+  StyleSheet,
+} from "react-native-windows";
 import {BaseTextInput} from "../../../components/baseTextInput/baseTextInput";
 import BgShape from "../../../assets/images/bg-shape.svg";
-import {useNavigation} from "@react-navigation/native";
-import {ITCHIO_STORE_ROUTE} from "../../../constants/routes";
 import useItchioStore from "store/itchio";
 import {signInAsync} from "helper/auth";
 import BaseButton from "components/baseButton/BaseButton";
-import styles from "./ItchioOauth.styles";
 
 const ItchioOauth = () => {
   const {height, width} = useWindowDimensions();
-  const navigation = useNavigation();
 
   const [tokenInput, setTokenInput] = useState("");
   const {token, validateToken, awaitingToken, setAwait} = useItchioStore();
@@ -20,13 +22,6 @@ const ItchioOauth = () => {
     signInAsync();
     setAwait(true);
   };
-
-  useEffect(() => {
-    if (token) {
-      // @ts-ignore
-      navigation.navigate(ITCHIO_STORE_ROUTE);
-    }
-  }, [token]);
 
   const InputToken = () => (
     <>
@@ -68,6 +63,7 @@ const ItchioOauth = () => {
               title="OAuth Login"
               style={styles.buttonContainer}
               textStyle={styles.buttonText}
+              disabled={awaitingToken}
             />
           </>
         ) : null}
@@ -75,5 +71,44 @@ const ItchioOauth = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  loginText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  buttonContainer: {
+    backgroundColor: "#FF2449",
+    height: 48,
+    width: 383,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: "black",
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  mainContainer: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#212223",
+  },
+  imageStyle: {
+    position: "absolute",
+    right: "30%",
+  },
+  innerContainer: {
+    paddingLeft: 30,
+    justifyContent: "center",
+    gap: 28,
+  },
+});
 
 export default ItchioOauth;

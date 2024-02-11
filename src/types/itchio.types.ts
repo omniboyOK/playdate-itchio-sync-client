@@ -1,7 +1,9 @@
 export interface Game {
   id: string;
   title: string;
-  img: string;
+  img?: string;
+  cover_url: string;
+  status?: string;
 }
 
 export interface GameDOMElement {
