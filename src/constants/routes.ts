@@ -2,6 +2,7 @@
 export const MAIN_STACK = "MainStack";
 export const FAVOURITES_STACK = "FavouritesStack";
 export const AUTH_STACK = "AuthStack";
+export const HOME_SCREEN_ROUTE = "HomeScreenRoute";
 
 // Itchio
 export const ITCHIO_STACK = "ItchioStack";

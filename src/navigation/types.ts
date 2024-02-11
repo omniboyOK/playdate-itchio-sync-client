@@ -1,6 +1,7 @@
 import {
   AUTH_STACK,
   FAVOURITE_GAMES_ROUTE,
+  HOME_SCREEN_ROUTE,
   ITCHIO_AUTH_ROUTE,
   ITCHIO_OWNED_ROUTE,
   ITCHIO_STORE_ROUTE,
@@ -18,6 +19,7 @@ export type MainStackParamList = {
   [FAVOURITE_GAMES_ROUTE]: undefined;
   [PLAYDATE_AUTH_ROUTE]: undefined;
   [ITCHIO_STORE_ROUTE]: undefined;
+  [HOME_SCREEN_ROUTE]: undefined;
 };
 
 export type AuthStackParamList = {
