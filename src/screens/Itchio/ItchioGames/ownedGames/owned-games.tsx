@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {BaseScreen} from "components";
 import useItchioStore from "../../../../store/itchio";
 import GameList from "screens/Itchio/components/game-list";
+import {View} from "react-native-windows";
 
 const OwnedGames = () => {
   const {setOwnedGames, ownedGames} = useItchioStore();
@@ -10,8 +11,10 @@ const OwnedGames = () => {
   }, [ownedGames]);
 
   return (
-    <BaseScreen styles={{backgroundColor: "#212223", padding: 25}}>
-      <GameList games={ownedGames} loading={false} />
+    <BaseScreen>
+      <View style={{flex: 1, gap: 15, marginLeft: 25, marginVertical: 25}}>
+        <GameList games={ownedGames} loading={false} />
+      </View>
     </BaseScreen>
   );
 };

@@ -52,6 +52,7 @@ const Home = ({navigation}) => {
             loading={loadingOwned}
             onPress={handleOwnedNavigation}
           />
+
           <ShortList
             games={favouriteGames}
             number={5}

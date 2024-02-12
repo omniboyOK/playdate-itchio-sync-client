@@ -1,18 +1,17 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {BaseScreen} from "components";
 import useItchioStore from "../../../../store/itchio";
 import GameList from "screens/Itchio/components/game-list";
+import {View} from "react-native-windows";
 
 const FavouriteGames = () => {
-  const games = useItchioStore(state => state.gamestore);
-  const fetchGames = useItchioStore(state => state.setGameStore);
-  useEffect(() => {
-    fetchGames();
-  }, [games]);
+  const {favouriteGames} = useItchioStore();
 
   return (
-    <BaseScreen styles={{backgroundColor: "#212223", padding: 25}}>
-      <GameList games={games} loading={false} />
+    <BaseScreen>
+      <View style={{flex: 1, gap: 15, marginLeft: 25, marginVertical: 25}}>
+        <GameList games={favouriteGames} loading={false} />
+      </View>
     </BaseScreen>
   );
 };

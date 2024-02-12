@@ -21,6 +21,7 @@ const style = StyleSheet.create({
     borderRadius: 8,
     padding: CARD_PADDING,
     justifyContent: "center",
+    margin: 5
   },
 });
 
