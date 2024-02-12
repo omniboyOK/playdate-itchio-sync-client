@@ -2,15 +2,13 @@ import React, {useEffect} from "react";
 import {BaseScreen} from "components";
 import useItchioStore from "../../store/itchio";
 import ShortList from "screens/Itchio/components/game-short-list";
-import {ScrollView, View} from "react-native-windows";
+import {ScrollView, View, StyleSheet} from "react-native"; // Importamos StyleSheet
 import {
   FAVOURITE_GAMES_ROUTE,
   ITCHIO_OWNED_ROUTE,
   ITCHIO_STORE_ROUTE,
 } from "constants/routes";
 
-// TODO: Fix type safety
-// @ts-ignore
 const Home = ({navigation}) => {
   const {
     gamestore,
@@ -36,7 +34,7 @@ const Home = ({navigation}) => {
   return (
     <BaseScreen>
       <ScrollView>
-        <View style={{flex: 1, gap: 15, marginLeft: 25, marginVertical: 25}}>
+        <View style={styles.container}>
           <ShortList
             games={gamestore}
             number={5}
@@ -44,7 +42,6 @@ const Home = ({navigation}) => {
             loading={loadingStore}
             onPress={handleStoreNavigation}
           />
-
           <ShortList
             games={ownedGames}
             number={5}
@@ -52,7 +49,6 @@ const Home = ({navigation}) => {
             loading={loadingOwned}
             onPress={handleOwnedNavigation}
           />
-
           <ShortList
             games={favouriteGames}
             number={5}
@@ -65,5 +61,14 @@ const Home = ({navigation}) => {
     </BaseScreen>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 15,
+    marginLeft: 25,
+    marginVertical: 25,
+  },
+});
 
 export default Home;

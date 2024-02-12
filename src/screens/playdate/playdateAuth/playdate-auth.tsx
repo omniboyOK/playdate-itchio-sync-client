@@ -3,7 +3,7 @@ import {Text, View, Image, useWindowDimensions} from "react-native-windows";
 import usePlaydateStore from "../../../store/playdate";
 import {BaseTextInput} from "../../../components/baseTextInput/baseTextInput";
 import BaseButton from "../../../components/baseButton/BaseButton";
-import BgShape from "../../../assets/images/bg-shape2.svg";
+import BgShape from "assets/images/bg-shape2.svg";
 import {useNavigation} from "@react-navigation/native";
 import {ITCHIO_AUTH_ROUTE} from "../../../constants/routes";
 import {StyleSheet} from "react-native";

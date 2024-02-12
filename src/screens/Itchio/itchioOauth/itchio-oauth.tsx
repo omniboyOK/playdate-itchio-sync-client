@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native-windows";
 import {BaseTextInput} from "../../../components/baseTextInput/baseTextInput";
-import BgShape from "../../../assets/images/bg-shape.svg";
+import BgShape from "assets/images/bg-shape.svg";
 import useItchioStore from "store/itchio";
 import {signInAsync} from "helper/auth";
 import BaseButton from "components/baseButton/BaseButton";

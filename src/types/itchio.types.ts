@@ -3,8 +3,11 @@ export interface Game {
   title: string;
   img?: string;
   cover_url: string;
-  status?: string;
+  status?: GameStatus;
+  version: string;
 }
+
+export type GameStatus = "error" | "download" | "ok" | "update" | undefined;
 
 export interface GameDOMElement {
   attributes: {

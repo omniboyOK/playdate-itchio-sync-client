@@ -25,7 +25,7 @@
   "plugins": ["react", "react-native", "@typescript-eslint"],
   "rules": {
     "react/prop-types": 0,
-    "indent": ["error", 2],
+    "indent": ["error", 2, {"SwitchCase": 1}],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "react/self-closing-comp": 0,

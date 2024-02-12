@@ -4,6 +4,8 @@ import {Game} from "types/itchio.types";
 import BaseGameCard from "components/baseGameCard/base-game-card";
 import BaseCardSkeleton from "components/baseCard/base-card-skeleton";
 import BaseEmptyCard from "components/baseEmptyCard/base-empty-card";
+import Icon from "react-native-vector-icons/Octicons";
+import {PLAYDATE_YELLOW} from "constants/colors";
 
 type GameListProps = {
   games: Game[];
@@ -25,8 +27,12 @@ const ShortList: React.FC<GameListProps> = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.titleContainer} onPress={onPress}>
-        <Text style={styles.titleText}>{title}</Text>
-        {onPress && <Text style={styles.arrowText}>{">"}</Text>}
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>{title}</Text>
+          {onPress && (
+            <Icon name="chevron-right" size={24} color={PLAYDATE_YELLOW} />
+          )}
+        </View>
       </TouchableOpacity>
       <View style={styles.gamesContainer}>
         {loading && <BaseCardSkeleton />}
@@ -46,19 +52,20 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     flexDirection: "row",
-    gap: 10, // Note: 'gap' is not supported in all versions of React Native. Consider using margin instead.
+    alignItems: "center",
+    gap: 10,
+    marginVertical: 5,
   },
   titleText: {
     fontSize: 22,
     color: "white",
     fontFamily: "Lato-Bold",
-    marginBottom: 10,
+    lineHeight: 24,
   },
   arrowText: {
     fontSize: 22,
     color: "white",
     fontFamily: "Lato-Bold",
-    marginBottom: 10,
   },
   gamesContainer: {
     flex: 1,

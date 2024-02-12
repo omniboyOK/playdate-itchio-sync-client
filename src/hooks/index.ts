@@ -1,1 +1,3 @@
-export {};
+import useGameStatus from "./useGameStatus";
+
+export {useGameStatus};

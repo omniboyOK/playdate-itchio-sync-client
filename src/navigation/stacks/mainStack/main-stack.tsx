@@ -15,6 +15,7 @@ import {TextStyle, ViewStyle} from "react-native-windows";
 import FavouriteGames from "screens/Itchio/ItchioGames/favouriteGames/favourite-games";
 import OwnedGames from "screens/Itchio/ItchioGames/ownedGames/owned-games";
 import {ACRYLIC_COLOR} from "constants/colors";
+import BackButton from "../components/back-button";
 
 const Stack = createStackNavigator<MainStackParamList>();
 
@@ -29,6 +30,8 @@ const customTitleStyle: TextStyle = {
   fontFamily: "Latto-Bold",
   fontSize: 24,
   color: "white",
+  marginLeft: -20,
+  lineHeight: 32
 };
 
 const createCustomHeaderConfig = (title: string) => {
@@ -38,6 +41,7 @@ const createCustomHeaderConfig = (title: string) => {
     headerStyle: headerCustomStyle,
     headerTitleStyle: customTitleStyle,
     headerTintColor: "white",
+    headerBackImage: () => <BackButton />,
   };
 };
 

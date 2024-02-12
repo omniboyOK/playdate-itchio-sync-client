@@ -3,15 +3,21 @@ import React from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
 import {TouchableOpacity} from "react-native-windows";
 import {Game} from "types/itchio.types";
+import {CardAction} from "./card-actions";
+import {useGameStatus} from "hooks";
 
 type BaseGameCardProps = {
   game: Game;
 };
 
 const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
+  const status = useGameStatus(game);
+
+  const checkStatus = ["ok", "error"].includes(status || "");
+
   return (
-    <TouchableOpacity>
-      <BaseCard disabled={!!game.status}>
+    <TouchableOpacity disabled={checkStatus}>
+      <BaseCard disabled={checkStatus}>
         <View style={styles.container}>
           <Image
             source={{uri: game?.img || game.cover_url}}
@@ -20,19 +26,11 @@ const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
           <Text style={styles.title} numberOfLines={2}>
             {game.title}
           </Text>
-          <CardAction status={game?.status} />
+          <CardAction status={status} />
         </View>
       </BaseCard>
     </TouchableOpacity>
   );
-};
-
-const CardAction: React.FC<{status?: string}> = ({status}) => {
-  if (!status) {
-    return null;
-  }
-
-  return <Text style={styles.action}>action</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -50,11 +48,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "Latto-Bold",
     fontWeight: "bold",
-  },
-  action: {
-    flex: 4,
-    alignSelf: "center",
-    padding: 5,
   },
 });
 

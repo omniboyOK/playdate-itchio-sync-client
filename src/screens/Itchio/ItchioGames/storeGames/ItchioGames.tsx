@@ -13,7 +13,7 @@ const ItchioGames = () => {
 
   return (
     <BaseScreen>
-      <View style={{flex: 1, gap: 15, marginLeft: 25, marginVertical: 25}}>
+      <View style={{flex: 1, gap: 15, marginLeft: 25}}>
         <GameList games={games} loading={false} />
       </View>
     </BaseScreen>
