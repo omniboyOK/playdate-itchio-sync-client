@@ -14,11 +14,12 @@ import Home from "screens/Home/home";
 import {TextStyle, ViewStyle} from "react-native-windows";
 import FavouriteGames from "screens/Itchio/ItchioGames/favouriteGames/favourite-games";
 import OwnedGames from "screens/Itchio/ItchioGames/ownedGames/owned-games";
+import {ACRYLIC_COLOR} from "constants/colors";
 
 const Stack = createStackNavigator<MainStackParamList>();
 
 const headerCustomStyle: ViewStyle = {
-  backgroundColor: "#212223",
+  backgroundColor: ACRYLIC_COLOR,
   height: 48,
   borderTopWidth: 0,
   borderBottomWidth: 0,

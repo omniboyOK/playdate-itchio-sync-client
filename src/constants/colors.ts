@@ -7,5 +7,10 @@ export const BACKGROUND_COLOR =
 
 export const ACRYLIC_COLOR =
   Platform.OS === "windows"
-    ? PlatformColor("AcrylicBackgroundFillColorDefaultBrush")
+    ? PlatformColor("AcrylicBackgroundFillColorBaseBrush")
     : "#FFC833";
+
+export const ACRYLIC_HIGHLIGHT =
+  Platform.OS === "windows"
+    ? PlatformColor("AcrylicBackgroundFillColorDefaultBrush")
+    : "#33FFFF";

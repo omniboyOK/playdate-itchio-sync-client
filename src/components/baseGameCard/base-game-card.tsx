@@ -1,34 +1,18 @@
 import BaseCard from "components/baseCard/base-card";
-import {ACRYLIC_COLOR, BACKGROUND_COLOR} from "constants/colors";
-import React, {useState} from "react";
+import React from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
 import {TouchableOpacity} from "react-native-windows";
 import {Game} from "types/itchio.types";
 
 type BaseGameCardProps = {
   game: Game;
-  disabled?: boolean;
 };
 
-const BaseGameCard: React.FC<BaseGameCardProps> = ({
-  game,
-  disabled = false,
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-
+const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
   return (
     <TouchableOpacity>
-      <BaseCard>
-        <View
-          style={[
-            styles.container,
-            isHovered && !disabled ? styles.hovered : styles.normal,
-          ]}
-          onMouseEnter={disabled ? undefined : handleMouseEnter}
-          onMouseLeave={disabled ? undefined : handleMouseLeave}>
+      <BaseCard disabled={!!game.status}>
+        <View style={styles.container}>
           <Image
             source={{uri: game?.img || game.cover_url}}
             style={styles.image}
@@ -71,12 +55,6 @@ const styles = StyleSheet.create({
     flex: 4,
     alignSelf: "center",
     padding: 5,
-  },
-  normal: {
-    backgroundColor: ACRYLIC_COLOR,
-  },
-  hovered: {
-    backgroundColor: BACKGROUND_COLOR,
   },
 });
 
