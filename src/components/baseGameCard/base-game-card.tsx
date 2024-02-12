@@ -1,26 +1,45 @@
 import BaseCard from "components/baseCard/base-card";
-import React from "react";
+import {ACRYLIC_COLOR, BACKGROUND_COLOR} from "constants/colors";
+import React, {useState} from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
+import {TouchableOpacity} from "react-native-windows";
 import {Game} from "types/itchio.types";
 
 type BaseGameCardProps = {
   game: Game;
+  disabled?: boolean;
 };
 
-const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
+const BaseGameCard: React.FC<BaseGameCardProps> = ({
+  game,
+  disabled = false,
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
+
   return (
-    <BaseCard>
-      <View style={styles.container}>
-        <Image
-          source={{uri: game?.img || game.cover_url}}
-          style={styles.image}
-        />
-        <Text style={styles.title} numberOfLines={2}>
-          {game.title}
-        </Text>
-        <CardAction status={game?.status} />
-      </View>
-    </BaseCard>
+    <TouchableOpacity>
+      <BaseCard>
+        <View
+          style={[
+            styles.container,
+            isHovered && !disabled ? styles.hovered : styles.normal,
+          ]}
+          onMouseEnter={disabled ? undefined : handleMouseEnter}
+          onMouseLeave={disabled ? undefined : handleMouseLeave}>
+          <Image
+            source={{uri: game?.img || game.cover_url}}
+            style={styles.image}
+          />
+          <Text style={styles.title} numberOfLines={2}>
+            {game.title}
+          </Text>
+          <CardAction status={game?.status} />
+        </View>
+      </BaseCard>
+    </TouchableOpacity>
   );
 };
 
@@ -35,6 +54,7 @@ const CardAction: React.FC<{status?: string}> = ({status}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderRadius: 4,
   },
   image: {
     flex: 5,
@@ -51,6 +71,12 @@ const styles = StyleSheet.create({
     flex: 4,
     alignSelf: "center",
     padding: 5,
+  },
+  normal: {
+    backgroundColor: ACRYLIC_COLOR,
+  },
+  hovered: {
+    backgroundColor: BACKGROUND_COLOR,
   },
 });
 
