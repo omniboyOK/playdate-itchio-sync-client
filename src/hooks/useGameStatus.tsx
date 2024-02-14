@@ -1,32 +1,56 @@
+import {getGame} from "helper/itchio";
+import {useEffect, useState} from "react";
 import {Game, GameStatus} from "types/itchio.types";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getCurrentGameVersion = (game: Game): string | null => {
-  // TODO: check if game download, return version if true
-  try {
-    const {version} = JSON.parse(localStorage.getItem(game.id) || "");
-
-    return version;
-  } catch (e) {
-    return null;
-  }
-};
-
 const useGameStatus = (game: Game): GameStatus => {
-  try {
-    const currentVersion = getCurrentGameVersion(game);
-    if (currentVersion === null) {
-      return "download";
-    }
+  const [status, setStatus] = useState<GameStatus>(undefined); // Corrected usage
 
-    if (game.version === currentVersion) {
-      return "ok";
-    } else {
-      return "update";
-    }
-  } catch (error) {
-    return "error";
-  }
+  useEffect(() => {
+    
+    const getCurrentGameVersion = async (
+      game: Game,
+    ): Promise<string | null> => {
+      try {
+        const savedGame = await getGame(game.id.toString());
+        console.log("saved", savedGame);
+        if (savedGame) {
+          return savedGame.updated_at;
+        }
+
+        return null;
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const getStatus = async () => {
+      try {
+        const currentVersion = await getCurrentGameVersion(game);
+        console.log(currentVersion);
+        if (currentVersion === null) {
+          setStatus("download");
+          return;
+        }
+
+        if (game.sideloaded) {
+          setStatus("ok");
+          return;
+        }
+
+        if (game.updated_at === currentVersion) {
+          setStatus("ready");
+        } else {
+          setStatus("update");
+        }
+      } catch (error) {
+        setStatus("error");
+      }
+    };
+
+    getStatus();
+  }, [game, game.updated_at, game.sideloaded]); // Include all dependencies used inside the effect
+
+  return status;
 };
 
 export default useGameStatus;

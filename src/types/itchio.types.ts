@@ -1,13 +1,19 @@
 export interface Game {
-  id: string;
+  id: number;
   title: string;
   img?: string;
   cover_url: string;
-  status?: GameStatus;
-  version: string;
+  updated_at: string;
+  sideloaded?: boolean;
 }
 
-export type GameStatus = "error" | "download" | "ok" | "update" | undefined;
+export type GameStatus =
+  | "error"
+  | "download"
+  | "ready"
+  | "update"
+  | "ok"
+  | undefined;
 
 export interface GameDOMElement {
   attributes: {
@@ -22,9 +28,7 @@ export interface ItchioUserInfo {
   image?: string;
 }
 
-export interface ItchioUser {
-  
-}
+export interface ItchioUser {}
 
 export interface CredentialsInfo {
   errors?: string[];

@@ -52,6 +52,8 @@ const useItchioStore = create((set, get) => ({
       const response = await fetchOwnedGames(get().token);
       const games = [];
 
+      console.log(response);
+
       if (response?.owned_keys.length > 0) {
         response?.owned_keys?.map(item => {
           item.game.download_key_id = item.id;

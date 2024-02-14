@@ -5,6 +5,8 @@ import {TouchableOpacity} from "react-native-windows";
 import {Game} from "types/itchio.types";
 import {CardAction} from "./card-actions";
 import {useGameStatus} from "hooks";
+import {saveGame} from "helper/itchio";
+import usePlaydateStore from "store/playdate";
 
 type BaseGameCardProps = {
   game: Game;
@@ -12,11 +14,41 @@ type BaseGameCardProps = {
 
 const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
   const status = useGameStatus(game);
+  const {sideLoadGame} = usePlaydateStore();
 
   const checkStatus = ["ok", "error"].includes(status || "");
 
+  const handleDownload = () => {
+    saveGame(game);
+  };
+
+  const handleUpdate = () => {
+    saveGame(game);
+  };
+
+  const handleSideload = () => {
+    sideLoadGame(game.id);
+  };
+
+  const action = () => {
+    switch (status) {
+      case "download":
+        return handleDownload;
+      case "update":
+        return handleUpdate;
+      case "ok":
+        return null;
+      case "ready":
+        return handleSideload;
+      case "error":
+        return null;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <TouchableOpacity disabled={checkStatus}>
+    <TouchableOpacity disabled={checkStatus} onPress={action}>
       <BaseCard disabled={checkStatus}>
         <View style={styles.container}>
           <Image
