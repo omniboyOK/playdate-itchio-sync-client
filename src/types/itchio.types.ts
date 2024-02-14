@@ -17,8 +17,13 @@ export interface GameDOMElement {
 }
 
 export interface ItchioUserInfo {
-  username?: string;
-  url?: string;
+  name?: string;
+  link?: string;
+  image?: string;
+}
+
+export interface ItchioUser {
+  
 }
 
 export interface CredentialsInfo {
