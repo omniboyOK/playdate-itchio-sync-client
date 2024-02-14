@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import {BaseScreen} from "components";
 import useItchioStore from "../../store/itchio";
 import ShortList from "screens/Itchio/components/game-short-list";
 import {ScrollView, View, StyleSheet} from "react-native"; // Importamos StyleSheet
@@ -8,7 +7,10 @@ import {
   ITCHIO_OWNED_ROUTE,
   ITCHIO_STORE_ROUTE,
 } from "constants/routes";
+import {BACKGROUND_COLOR} from "constants/colors";
+import FLAGS from "constants/flags";
 
+// @ts-ignore
 const Home = ({navigation}) => {
   const {
     gamestore,
@@ -32,9 +34,9 @@ const Home = ({navigation}) => {
   const handleOwnedNavigation = () => navigation.navigate(ITCHIO_OWNED_ROUTE);
 
   return (
-    <BaseScreen>
-      <ScrollView>
-        <View style={styles.container}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <View style={styles.container}>
+        {FLAGS.ITCHIO_STORE_FLAG && (
           <ShortList
             games={gamestore}
             number={5}
@@ -42,32 +44,32 @@ const Home = ({navigation}) => {
             loading={loadingStore}
             onPress={handleStoreNavigation}
           />
-          <ShortList
-            games={ownedGames}
-            number={5}
-            title={"My Games"}
-            loading={loadingOwned}
-            onPress={handleOwnedNavigation}
-          />
-          <ShortList
-            games={favouriteGames}
-            number={5}
-            title={"Favourite Games"}
-            loading={loadingFavourites}
-            onPress={handleFavouriteNavigation}
-          />
-        </View>
-      </ScrollView>
-    </BaseScreen>
+        )}
+        <ShortList
+          games={ownedGames}
+          number={5}
+          title={"My Games"}
+          loading={loadingOwned}
+          onPress={handleOwnedNavigation}
+        />
+        <ShortList
+          games={favouriteGames}
+          number={5}
+          title={"Favourite Games"}
+          loading={loadingFavourites}
+          onPress={handleFavouriteNavigation}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 15,
-    marginLeft: 25,
-    marginVertical: 25,
+    paddingLeft: 25,
+    paddingBottom: 25,
+    backgroundColor: BACKGROUND_COLOR,
   },
 });
 

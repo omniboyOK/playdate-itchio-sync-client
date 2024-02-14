@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// @ts-ignore
 import DomSelector from "react-native-dom-parser";
 
 export const signInAsync = async (token: string): Promise<void> => {
@@ -60,7 +61,6 @@ export async function getSideloads(): Promise<Game[]> {
   const response = await fetch("https://play.date/account/", {
     credentials: "include",
   });
-  console.log(response);
   const text = await response.text();
 
   const dom = DomSelector(text);
@@ -72,7 +72,6 @@ export async function getSideloads(): Promise<Game[]> {
       .getElementByClassName("action")
       .attributes["href"].split("#")[1];
 
-    console.log(id);
     const date = child.getElementByClassName("game-date").text.trim(); // todo: normalize this to ISO8061
     const title = child.getElementByClassName("game-title").text.trim();
     const version = child.getElementByClassName("game-version").text.trim();

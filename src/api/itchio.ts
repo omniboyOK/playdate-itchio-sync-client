@@ -49,6 +49,5 @@ export const fetchOwnedGames = async (
     },
   });
   const result = await response.json();
-  console.log(result);
   return result;
 };

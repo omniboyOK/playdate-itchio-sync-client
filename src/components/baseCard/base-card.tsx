@@ -29,6 +29,8 @@ const BaseCard: React.FC<BaseCardProps> = ({children, disabled = false}) => {
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
+    flexGrow: 1,
     backgroundColor: ACRYLIC_COLOR,
     height: BASE_CARD_HEIGHT,
     width: BASE_CARD_WIDTH,

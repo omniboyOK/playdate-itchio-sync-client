@@ -7,8 +7,8 @@ const BackButton = () => {
     <Icon
       name="chevron-left"
       color={PLAYDATE_YELLOW}
-      size={30}
-      style={{width: 15}}
+      size={24}
+      style={{width: 24, marginRight: -24}}
     />
   );
 };

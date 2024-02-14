@@ -66,7 +66,6 @@ async function checkCredentialsExist() {
 }
 
 async function enterCredentialsFlow() {
-  console.log("Your credentials are stored locally.");
   const results = await inquirer.prompt([
     {
       type: "input",

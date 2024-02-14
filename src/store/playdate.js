@@ -17,7 +17,6 @@ const usePlaydateStore = create(set => ({
   setLoading: bool => set({isLoading: bool}),
   getOwnedGames: async () => {
     const games = await getSideloads();
-    console.log(games);
     set({ownedGames: games});
   },
 }));

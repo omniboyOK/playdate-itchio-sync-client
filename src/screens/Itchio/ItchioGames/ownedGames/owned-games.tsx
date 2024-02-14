@@ -12,7 +12,7 @@ const OwnedGames = () => {
 
   return (
     <BaseScreen>
-      <View style={{flex: 1, gap: 15, marginLeft: 25}}>
+      <View style={{flex: 1, gap: 15, paddingLeft: 25, paddingTop: 25}}>
         <GameList games={ownedGames} loading={false} />
       </View>
     </BaseScreen>

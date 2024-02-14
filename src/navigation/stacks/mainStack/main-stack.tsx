@@ -1,4 +1,7 @@
-import {createStackNavigator} from "@react-navigation/stack";
+import {
+  StackNavigationOptions,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import React from "react";
 import {
   FAVOURITE_GAMES_ROUTE,
@@ -16,13 +19,13 @@ import FavouriteGames from "screens/Itchio/ItchioGames/favouriteGames/favourite-
 import OwnedGames from "screens/Itchio/ItchioGames/ownedGames/owned-games";
 import {ACRYLIC_COLOR} from "constants/colors";
 import BackButton from "../components/back-button";
+import CustomHeader from "../components/custom-header";
 
 const Stack = createStackNavigator<MainStackParamList>();
 
 const headerCustomStyle: ViewStyle = {
   backgroundColor: ACRYLIC_COLOR,
-  height: 48,
-  borderTopWidth: 0,
+  height: 60,
   borderBottomWidth: 0,
 };
 
@@ -30,11 +33,10 @@ const customTitleStyle: TextStyle = {
   fontFamily: "Latto-Bold",
   fontSize: 24,
   color: "white",
-  marginLeft: -20,
-  lineHeight: 32
+  lineHeight: 32,
 };
 
-const createCustomHeaderConfig = (title: string) => {
+const createCustomHeaderConfig = (title: string): StackNavigationOptions => {
   return {
     headerTitle: title,
     headerShown: true,
@@ -42,6 +44,7 @@ const createCustomHeaderConfig = (title: string) => {
     headerTitleStyle: customTitleStyle,
     headerTintColor: "white",
     headerBackImage: () => <BackButton />,
+    headerRight: () => <CustomHeader />,
   };
 };
 
@@ -49,10 +52,7 @@ const MainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={HOME_SCREEN_ROUTE}
-      screenOptions={{
-        headerShown: false,
-        headerTitle: "Home",
-      }}>
+      screenOptions={createCustomHeaderConfig("Home")}>
       <Stack.Screen
         name={HOME_SCREEN_ROUTE}
         component={Home}

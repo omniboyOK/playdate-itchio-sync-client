@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   cardWrapper: {
-    margin: 5
+    marginRight: 10,
   },
 });
 

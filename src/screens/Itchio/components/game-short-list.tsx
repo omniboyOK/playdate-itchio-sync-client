@@ -25,7 +25,7 @@ const ShortList: React.FC<GameListProps> = ({
   const limitedGames = games.slice(0, number);
 
   return (
-    <View style={styles.container}>
+    <>
       <TouchableOpacity style={styles.titleContainer} onPress={onPress}>
         <View style={styles.titleContainer}>
           <Text style={styles.titleText}>{title}</Text>
@@ -41,7 +41,7 @@ const ShortList: React.FC<GameListProps> = ({
         ))}
         {!limitedGames?.length && !loading && <BaseEmptyCard />}
       </View>
-    </View>
+    </>
   );
 };
 
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   titleContainer: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
@@ -68,9 +67,8 @@ const styles = StyleSheet.create({
     fontFamily: "Lato-Bold",
   },
   gamesContainer: {
-    flex: 1,
     flexDirection: "row",
-    gap: 15, // Similar note as above regarding 'gap'.
+    gap: 15,
   },
 });
 

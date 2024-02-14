@@ -9,7 +9,7 @@ const FavouriteGames = () => {
 
   return (
     <BaseScreen>
-      <View style={{flex: 1, gap: 15, marginLeft: 25}}>
+      <View style={{flex: 1, gap: 15, paddingLeft: 25, paddingTop: 25}}>
         <GameList games={favouriteGames} loading={false} />
       </View>
     </BaseScreen>
