@@ -1,6 +1,6 @@
 import {Linking} from "react-native-windows";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {fetchAccountInfo, fetchCredentialsInfo} from "../api/itchio";
+import {fetchCredentialsInfo} from "../api/itchio";
 import {ITCHIO_LOGIN_URL} from "@env";
 
 // Oauth Login with app token
@@ -8,7 +8,6 @@ export const signInAsync = (): void => {
   Linking.openURL(ITCHIO_LOGIN_URL);
 };
 
-// Check if token is valid and save it
 export const checkToken = async (token: string): Promise<string> => {
   try {
     const response = await fetchCredentialsInfo(token);
@@ -16,12 +15,7 @@ export const checkToken = async (token: string): Promise<string> => {
 
     if (errors?.length) throw new Error("Invalid Token");
 
-    const fetchAccountResponse = await fetchAccountInfo(token);
-    const {username, url} = await fetchAccountResponse.json();
-
     await AsyncStorage.setItem("userToken", token);
-    await AsyncStorage.setItem("userName", username || "");
-    await AsyncStorage.setItem("userProfile", url || "");
 
     return JSON.stringify({errors, user});
   } catch (error) {

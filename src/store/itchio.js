@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchOwnedGames } from "../api/itchio";
+import { fetchAccountInfo, fetchOwnedGames } from "../api/itchio";
 import { asyncLogout, checkToken } from "../helper/auth";
 import { getPotentialPlaydateGameNames } from "../helper/itchio";
 
@@ -14,11 +14,20 @@ const useItchioStore = create((set, get) => ({
   account: {
     name: "",
     link: "",
+    image: ""
   },
   awaitingToken: false,
+  loadingAccountInfo: false,
   logout: async () => {
     set({ token: null, awaitingToken: false });
     await asyncLogout();
+  },
+  getAccountInfo: async token => {
+    set({ loadingAccountInfo: true });
+    const response = await fetchAccountInfo(token);
+    const { user } = await response.json();
+    set({ account: { name: user.display_name, image: user.cover_url, link: user.url } });
+    set({ loadingAccountInfo: false });
   },
   validateToken: async token => {
     set({ awaitingToken: true });
@@ -41,7 +50,6 @@ const useItchioStore = create((set, get) => ({
     set({ loadingOwned: true });
     if (!get().ownedGames.length) {
       const response = await fetchOwnedGames(get().token);
-      console.log(response);
       const games = [];
 
       if (response?.owned_keys.length > 0) {
