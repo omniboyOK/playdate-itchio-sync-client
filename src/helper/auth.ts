@@ -19,8 +19,7 @@ export const checkToken = async (token: string): Promise<string> => {
 
     return JSON.stringify({errors, user});
   } catch (error) {
-    console.error(error);
-    throw error;
+    return "";
   }
 };
 

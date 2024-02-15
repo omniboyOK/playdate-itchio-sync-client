@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { fetchAccountInfo, fetchOwnedGames } from "../api/itchio";
-import { asyncLogout, checkToken } from "../helper/auth";
-import { getPotentialPlaydateGameNames } from "../helper/itchio";
+import {create} from "zustand";
+import {fetchAccountInfo, fetchOwnedGames} from "../api/itchio";
+import {asyncLogout, checkToken} from "../helper/auth";
+import {getPotentialPlaydateGameNames} from "../helper/itchio";
 
 const useItchioStore = create((set, get) => ({
   gamestore: [],
@@ -14,55 +14,64 @@ const useItchioStore = create((set, get) => ({
   account: {
     name: "",
     link: "",
-    image: ""
+    image: "",
   },
   awaitingToken: false,
   loadingAccountInfo: false,
   logout: async () => {
-    set({ token: null, awaitingToken: false });
+    set({token: null, awaitingToken: false});
     await asyncLogout();
   },
   getAccountInfo: async token => {
-    set({ loadingAccountInfo: true });
+    set({loadingAccountInfo: true});
     const response = await fetchAccountInfo(token);
-    const { user } = await response.json();
-    set({ account: { name: user.display_name, image: user.cover_url, link: user.url } });
-    set({ loadingAccountInfo: false });
+    const {user} = await response.json();
+    set({
+      account: {name: user.display_name, image: user.cover_url, link: user.url},
+    });
+    set({loadingAccountInfo: false});
   },
   validateToken: async token => {
-    set({ awaitingToken: true });
+    set({awaitingToken: true});
     const result = await checkToken(token);
     if (result) {
-      set({ token: token });
+      set({token: token});
     }
-    set({ awaitingToken: false });
+    set({awaitingToken: false});
   },
   setGameStore: async () => {
-    set({ loadingStore: true });
+    set({loadingStore: true});
     if (!get().gamestore.length) {
       const response = await getPotentialPlaydateGameNames(1);
-      set({ gamestore: response });
+      set({gamestore: response});
     }
-    set({ loadingStore: false });
-
+    set({loadingStore: false});
   },
-  setOwnedGames: async () => {
-    set({ loadingOwned: true });
+  setOwnedGames: async (games = []) => {
+    set({loadingOwned: true});
     if (!get().ownedGames.length) {
       const response = await fetchOwnedGames(get().token);
       const games = [];
 
       if (response?.owned_keys.length > 0) {
         response?.owned_keys?.map(item => {
-          item.game.download_key_id = item.id;
-          games.push(item.game);
+          const {game, updated_at, id} = item;
+          games.push({
+            id: game.id,
+            title: game.title,
+            img: game.cover_url,
+            updated_at: updated_at,
+            download_key: id,
+          });
         });
       }
-      set({ ownedGames: games });
+      set({ownedGames: games});
+    } else {
+      set({ownedGames: games});
     }
-    set({ loadingOwned: false });
+    set({loadingOwned: false});
   },
-  setAwait: bool => set({ awaitingToken: bool }),
+  setAwait: bool => set({awaitingToken: bool}),
 }));
 
 export default useItchioStore;

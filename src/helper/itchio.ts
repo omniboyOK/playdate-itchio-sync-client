@@ -2,10 +2,12 @@ import DomSelector from "react-native-dom-parser";
 import {fetchItchioTaggedGames, fetchOwnedGames} from "../api/itchio";
 import {ATTRIBUTES, QUERY} from "../constants/itchio";
 import {
+  Game,
   GameDOMElement,
   ItchioGame,
   OwnedGamesResponse,
 } from "../types/itchio.types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GAME_ID_ERROR = "error - unknown id";
 const DEFAULT_GAME_IMG = "";
@@ -15,7 +17,9 @@ export async function getOwnedGames(
 ): Promise<OwnedGamesResponse> {
   try {
     const response = await fetchOwnedGames(authorization);
-    return await response.json();
+    const games = await response.json();
+    console.log("OWNED GAMES ----->", games);
+    return games;
   } catch (error) {
     console.error("Error fetching owned games:", error);
     return {owned_keys: [], page: 0, per_page: 50};
@@ -35,10 +39,10 @@ export async function getPotentialPlaydateGameNames(
 
     const dom = DomSelector(content);
     const games = dom.getElementsByClassName(QUERY.GAME_DATA_CLASS);
-
-    return games.map((gameElement: GameDOMElement) =>
+    const gameList = games.map((gameElement: GameDOMElement) =>
       processGameElement(gameElement),
     );
+    return gameList;
   } catch (error) {
     console.error("Error fetching potential playdate games:", error);
     return [];
@@ -75,4 +79,29 @@ export async function getAllPotentialPlaydateGameNames(): Promise<string[]> {
   }
 
   return Array.from(allNames);
+}
+
+export async function saveGame(game: Game): Promise<void> {
+  try {
+    await AsyncStorage.setItem(game.id.toString(), JSON.stringify(game));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getGame(id: string): Promise<Game | null> {
+  try {
+    console.log("getGame", id);
+    const item = await AsyncStorage.getItem(id);
+
+    if (item) {
+      console.log("FOUND GAME");
+      return JSON.parse(item);
+    }
+
+    return null;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
 }

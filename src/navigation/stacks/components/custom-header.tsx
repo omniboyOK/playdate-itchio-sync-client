@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native-windows";
 import useItchioStore from "store/itchio";
+import Avatar from "assets/images/default-avatar.jpg";
 
 const CustomHeader = () => {
   const {token, getAccountInfo, account, logout} = useItchioStore();
@@ -39,8 +40,19 @@ const CustomHeader = () => {
         }}>
         <TouchableOpacity onPress={goToProfile} style={{flexDirection: "row"}}>
           <Image
-            source={{uri: image}}
-            style={{width: 24, height: 24, borderRadius: 8}}
+            source={
+              image
+                ? {
+                  uri: image,
+                }
+                : Avatar
+            }
+            style={{
+              width: 24,
+              height: 24,
+              borderRadius: 8,
+              marginHorizontal: 5,
+            }}
           />
           <Text style={style.text}>{name}</Text>
         </TouchableOpacity>

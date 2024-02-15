@@ -6,6 +6,7 @@ import {View} from "react-native-windows";
 
 const OwnedGames = () => {
   const {setOwnedGames, ownedGames} = useItchioStore();
+
   useEffect(() => {
     setOwnedGames();
   }, [ownedGames]);
