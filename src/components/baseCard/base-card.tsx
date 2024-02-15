@@ -9,7 +9,7 @@ type BaseCardProps = {
 };
 
 const BaseCard: React.FC<BaseCardProps> = ({children, disabled = false}) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);

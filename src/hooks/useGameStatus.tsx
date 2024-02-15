@@ -3,16 +3,15 @@ import {useEffect, useState} from "react";
 import {Game, GameStatus} from "types/itchio.types";
 
 const useGameStatus = (game: Game): GameStatus => {
-  const [status, setStatus] = useState<GameStatus>(undefined); // Corrected usage
+  const [status, setStatus] = useState<GameStatus>(); // Corrected usage
 
   useEffect(() => {
-    
     const getCurrentGameVersion = async (
       game: Game,
     ): Promise<string | null> => {
       try {
         const savedGame = await getGame(game.id.toString());
-        console.log("saved", savedGame);
+
         if (savedGame) {
           return savedGame.updated_at;
         }
@@ -26,7 +25,7 @@ const useGameStatus = (game: Game): GameStatus => {
     const getStatus = async () => {
       try {
         const currentVersion = await getCurrentGameVersion(game);
-        console.log(currentVersion);
+
         if (currentVersion === null) {
           setStatus("download");
           return;

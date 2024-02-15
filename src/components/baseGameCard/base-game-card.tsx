@@ -51,10 +51,7 @@ const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
     <TouchableOpacity disabled={checkStatus} onPress={action}>
       <BaseCard disabled={checkStatus}>
         <View style={styles.container}>
-          <Image
-            source={{uri: game?.img || game.cover_url}}
-            style={styles.image}
-          />
+          <Image source={{uri: game.img}} style={styles.image} />
           <Text style={styles.title} numberOfLines={2}>
             {game.title}
           </Text>
