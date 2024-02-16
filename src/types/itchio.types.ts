@@ -5,14 +5,15 @@ export interface Game {
   updated_at: string;
   sideloaded?: boolean;
   download_key?: string;
+  status?: GameStatus;
 }
 
 export type GameStatus =
-  | "error"
   | "download"
-  | "ready"
+  | "sideload"
+  | "done"
   | "update"
-  | "ok"
+  | "error"
   | undefined;
 
 export interface GameDOMElement {

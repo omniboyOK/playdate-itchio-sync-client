@@ -5,16 +5,20 @@ import {View} from "react-native-windows";
 import useItchioOwnedGamesData from "hooks/useItchioOwnedGamesData";
 
 const OwnedGames = () => {
-  const {fetchItchioOwnedGames, games: ownedGames} = useItchioOwnedGamesData();
+  const {
+    fetchItchioOwnedGames,
+    games: ownedGames,
+    isLoading,
+  } = useItchioOwnedGamesData();
 
   useEffect(() => {
     fetchItchioOwnedGames();
-  }, [ownedGames]);
+  }, [fetchItchioOwnedGames]);
 
   return (
     <BaseScreen>
       <View style={{flex: 1, gap: 15, paddingLeft: 25, paddingTop: 25}}>
-        <GameList games={ownedGames} loading={false} />
+        <GameList games={ownedGames} loading={isLoading} />
       </View>
     </BaseScreen>
   );

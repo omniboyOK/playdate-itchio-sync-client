@@ -49,27 +49,47 @@ const useItchioStore = create((set, get) => ({
   },
   fetchItchioOwnedGames: async () => {
     set({ loadingOwned: true });
+
+    // Get Games from itchio
     if (!get().ownedGames.length) {
-      const response = await fetchOwnedGames(get().token);
+      const { owned_keys } = await fetchOwnedGames(get().token);
       const games = [];
 
-      if (response?.owned_keys.length > 0) {
-        response?.owned_keys?.map(item => {
+      if (owned_keys?.length > 0) {
+        // Loop owned games
+        owned_keys.map(item => {
           const { game, updated_at, id } = item;
+
           games.push({
             id: game.id,
             title: game.title,
             img: game.cover_url,
             updated_at: updated_at,
-            download_key: id,
+            download_key: id, // set download key
           });
         });
       }
+
       set({ ownedGames: games });
     }
     set({ loadingOwned: false });
   },
   setAwait: bool => set({ awaitingToken: bool }),
-}));
+  setGameStatus: async (game, status) => {
+    let games = get().ownedGames;
+
+    const updatedGames = games.map(g => {
+      if (g.id === game.id) {
+        console.log({ ...g, status });
+        return { ...g, status };
+      } else {
+        return g;
+      }
+    });
+
+    set({ ownedGames: updatedGames });
+  },
+}
+));
 
 export default useItchioStore;

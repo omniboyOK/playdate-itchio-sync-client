@@ -89,13 +89,11 @@ export async function saveGame(game: Game): Promise<void> {
   }
 }
 
-export async function getGame(id: string): Promise<Game | null> {
+export async function getGameFromStorage(id: string): Promise<Game | null> {
   try {
-    console.log("getGame", id);
     const item = await AsyncStorage.getItem(id);
 
     if (item) {
-      console.log("FOUND GAME");
       return JSON.parse(item);
     }
 

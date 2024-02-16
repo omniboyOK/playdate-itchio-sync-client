@@ -7,37 +7,46 @@ type CardActionProps = {
   status?: GameStatus;
 };
 
+const statusIcons = {
+  done: "check",
+  error: "circle-slash",
+  download: "download",
+  sideload: "upload",
+  update: "sync",
+};
+
 const CardAction: React.FC<CardActionProps> = ({status = null}) => {
+
   const renderContent = () => {
     switch (status) {
       case "error":
         return (
           <Text style={[styles.action]}>
-            <Icon name="circle-slash" size={32} color={"#FF004D"} />
+            <Icon name={statusIcons.error} size={32} color={"#FF004D"} />
           </Text>
         );
       case "download":
         return (
           <Text style={[styles.action]}>
-            <Icon name="download" size={32} color={"#F94C10"} />
+            <Icon name={statusIcons.download} size={32} color={"#F94C10"} />
           </Text>
         );
-      case "ok":
+      case "done":
         return (
           <Text style={[styles.action]}>
-            <Icon name="check" size={32} color={"#45FFCA"} />
+            <Icon name={statusIcons.done} size={32} color={"#45FFCA"} />
           </Text>
         );
       case "update":
         return (
           <Text style={[styles.action]}>
-            <Icon name="sync" size={32} color={"#9400FF"} />
+            <Icon name={statusIcons.update} size={32} color={"#9400FF"} />
           </Text>
         );
-      case "ready":
+      case "sideload":
         return (
           <Text style={[styles.action]}>
-            <Icon name="upload" size={32} color={"#F94C10"} />
+            <Icon name={statusIcons.sideload} size={32} color={"#F94C10"} />
           </Text>
         );
       default:

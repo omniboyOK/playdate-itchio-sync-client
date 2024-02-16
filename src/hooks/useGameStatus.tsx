@@ -1,55 +1,35 @@
-import {getGame} from "helper/itchio";
+import {getGameFromStorage} from "helper/itchio";
 import {useEffect, useState} from "react";
-import {Game, GameStatus} from "types/itchio.types";
+import {Game} from "types/itchio.types";
 
-const useGameStatus = (game: Game): GameStatus => {
-  const [status, setStatus] = useState<GameStatus>(); // Corrected usage
+const useGameStatus = (game: Game) => {
+  const [updatedGame, setUpdatedGame] = useState(game);
 
   useEffect(() => {
-    const getCurrentGameVersion = async (
-      game: Game,
-    ): Promise<string | null> => {
-      try {
-        const savedGame = await getGame(game.id.toString());
+    console.log("REACTING", game.id);
+    const updateGameStatus = async () => {
+      if (!game || !game.id) {
+        setUpdatedGame({...game, status: "error"});
+      }
 
-        if (savedGame) {
-          return savedGame.updated_at;
+      const localGame = await getGameFromStorage(game.id.toString());
+      if (localGame) {
+        if (localGame.updated_at < game.updated_at) {
+          setUpdatedGame({...game, status: "update"});
         }
-
-        return null;
-      } catch (e) {
-        return null;
+        setUpdatedGame({
+          ...game,
+          status: localGame.status === "done" ? "done" : "sideload",
+        });
+      } else {
+        setUpdatedGame({...game, status: "download"});
       }
     };
 
-    const getStatus = async () => {
-      try {
-        const currentVersion = await getCurrentGameVersion(game);
+    updateGameStatus();
+  }, [game]);
 
-        if (currentVersion === null) {
-          setStatus("download");
-          return;
-        }
-
-        if (game.sideloaded) {
-          setStatus("ok");
-          return;
-        }
-
-        if (game.updated_at === currentVersion) {
-          setStatus("ready");
-        } else {
-          setStatus("update");
-        }
-      } catch (error) {
-        setStatus("error");
-      }
-    };
-
-    getStatus();
-  }, [game, game.updated_at, game.sideloaded]); // Include all dependencies used inside the effect
-
-  return status;
+  return updatedGame;
 };
 
 export default useGameStatus;
