@@ -7,7 +7,7 @@ type CardActionProps = {
   status?: GameStatus;
 };
 
-const CardAction: React.FC<CardActionProps> = ({status}) => {
+const CardAction: React.FC<CardActionProps> = ({status = null}) => {
   const renderContent = () => {
     switch (status) {
       case "error":

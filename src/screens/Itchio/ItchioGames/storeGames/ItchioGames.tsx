@@ -6,7 +6,7 @@ import {View} from "react-native-windows";
 
 const ItchioGames = () => {
   const games = useItchioStore(state => state.gamestore);
-  const fetchGames = useItchioStore(state => state.setGameStore);
+  const fetchGames = useItchioStore(state => state.fetchItchioStore);
   useEffect(() => {
     fetchGames();
   }, [games]);

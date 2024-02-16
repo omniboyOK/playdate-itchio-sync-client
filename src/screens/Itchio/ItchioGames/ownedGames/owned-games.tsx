@@ -1,14 +1,14 @@
 import React, {useEffect} from "react";
 import {BaseScreen} from "components";
-import useItchioStore from "../../../../store/itchio";
 import GameList from "screens/Itchio/components/game-list";
 import {View} from "react-native-windows";
+import useItchioOwnedGamesData from "hooks/useItchioOwnedGamesData";
 
 const OwnedGames = () => {
-  const {setOwnedGames, ownedGames} = useItchioStore();
+  const {fetchItchioOwnedGames, games: ownedGames} = useItchioOwnedGamesData();
 
   useEffect(() => {
-    setOwnedGames();
+    fetchItchioOwnedGames();
   }, [ownedGames]);
 
   return (

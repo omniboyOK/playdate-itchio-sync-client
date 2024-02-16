@@ -11,7 +11,7 @@ type GameListProps = {
   games: Game[];
   number: number;
   title: string;
-  loading: boolean;
+  loading?: boolean;
   onPress?: () => void;
 };
 

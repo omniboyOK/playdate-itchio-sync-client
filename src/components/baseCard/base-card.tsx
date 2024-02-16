@@ -5,7 +5,7 @@ import {StyleSheet, View} from "react-native-windows";
 
 type BaseCardProps = {
   children: React.ReactNode;
-  disabled: boolean;
+  disabled?: boolean;
 };
 
 const BaseCard: React.FC<BaseCardProps> = ({children, disabled = false}) => {

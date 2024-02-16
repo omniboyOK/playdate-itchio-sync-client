@@ -23,7 +23,7 @@ const usePlaydateStore = create(set => ({
   },
   sideLoadGame: async gameId => {
     set({isSideLoading: true});
-    const {ownedGames, setOwnedGames} = useItchioStore.getState();
+    const {ownedGames, fetchItchioOwnedGames} = useItchioStore.getState();
 
     // Find the game by ID and update its 'sideloaded' property
     const updatedOwnedGames = ownedGames.map(game =>
@@ -31,7 +31,7 @@ const usePlaydateStore = create(set => ({
     );
 
     // Use the action from useItchioStore to update the state
-    setOwnedGames(updatedOwnedGames);
+    fetchItchioOwnedGames(updatedOwnedGames);
     set({isSideLoading: false});
   },
 }));
