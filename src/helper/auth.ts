@@ -8,10 +8,31 @@ export const signInAsync = (): void => {
   Linking.openURL(ITCHIO_LOGIN_URL);
 };
 
-export const checkToken = async (token: string): Promise<string> => {
+export const signInApiAsync = (): void => {
+  Linking.openURL("https://itch.io/user/settings/api-keys");
+};
+
+export const checkApiKey = async (token: string): Promise<boolean> => {
+  try {
+    const response = await fetchCredentialsInfo(token);
+    const {errors} = await response.json();
+
+    if (errors?.length) throw new Error("Invalid Token");
+
+    await AsyncStorage.setItem("userToken", token);
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const checkOauthToken = async (token: string): Promise<string> => {
   try {
     const response = await fetchCredentialsInfo(token);
     const {errors, user} = await response.json();
+    console.log(errors, user);
 
     if (errors?.length) throw new Error("Invalid Token");
 
@@ -21,6 +42,10 @@ export const checkToken = async (token: string): Promise<string> => {
   } catch (error) {
     return "";
   }
+};
+
+export const getAuthToken = async () => {
+  return await AsyncStorage.getItem("userToken");
 };
 
 // Remove token from local storage

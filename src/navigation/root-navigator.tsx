@@ -7,12 +7,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthStack from "./stacks/authStack/auth-stack";
 
 const RootNavigator = () => {
-  const {validateToken, token} = useItchioStore();
+  const {validateApiKey, token} = useItchioStore();
 
   const asyncLogin = useCallback(async () => {
     const accessToken = await AsyncStorage.getItem("userToken");
-    validateToken(accessToken);
-  }, [validateToken]);
+    validateApiKey(accessToken);
+  }, [validateApiKey]);
 
   useEffect(() => {
     asyncLogin();

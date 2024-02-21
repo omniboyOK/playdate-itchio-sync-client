@@ -71,7 +71,7 @@
           "Microsoft.UI.Xaml": "[2.8.0, )"
         }
       },
-      "reactnativeblobutil": {
+      "reactnativefs": {
         "type": "Project",
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",

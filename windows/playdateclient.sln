@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativeAsyncStorage", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RNScreens", "..\node_modules\react-native-screens\windows\RNScreens\RNScreens.vcxproj", "{D638F49E-29D2-4699-AC52-FACD82FA7138}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativeFs", "..\node_modules\@dr.pogodin\react-native-fs\windows\ReactNativeFs\ReactNativeFs.vcxproj", "{F912EBDD-F19A-48C7-A32C-49D2956FCE22}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\node_modules\react-native-windows\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
@@ -174,6 +176,18 @@ Global
 		{CDDE3311-EFD2-462D-8551-93637A7FAE92}.Release|x86.Build.0 = Release|Win32
 		{CDDE3311-EFD2-462D-8551-93637A7FAE92}.Release|ARM64.ActiveCfg = Release|ARM64
 		{CDDE3311-EFD2-462D-8551-93637A7FAE92}.Release|ARM64.Build.0 = Release|ARM64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Debug|x64.ActiveCfg = Debug|x64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Debug|x64.Build.0 = Debug|x64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Debug|x86.ActiveCfg = Debug|Win32
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Debug|x86.Build.0 = Debug|Win32
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Release|x64.ActiveCfg = Release|x64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Release|x64.Build.0 = Release|x64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Release|x86.ActiveCfg = Release|Win32
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Release|x86.Build.0 = Release|Win32
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F912EBDD-F19A-48C7-A32C-49D2956FCE22}.Release|ARM64.Build.0 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

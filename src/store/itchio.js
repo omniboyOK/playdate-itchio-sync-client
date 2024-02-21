@@ -1,7 +1,7 @@
-import { create } from "zustand";
-import { fetchAccountInfo, fetchOwnedGames } from "../api/itchio";
-import { asyncLogout, checkToken } from "../helper/auth";
-import { getPotentialPlaydateGameNames } from "../helper/itchio";
+import {create} from "zustand";
+import {fetchAccountInfo, fetchOwnedGames} from "../api/itchio";
+import {asyncLogout, checkApiKey, checkOauthToken} from "../helper/auth";
+import {getPotentialPlaydateGameNames} from "../helper/itchio";
 
 const useItchioStore = create((set, get) => ({
   gamestore: [],
@@ -19,46 +19,54 @@ const useItchioStore = create((set, get) => ({
   awaitingToken: false,
   loadingAccountInfo: false,
   logout: async () => {
-    set({ token: null, awaitingToken: false });
+    set({token: null, awaitingToken: false});
     await asyncLogout();
   },
   getAccountInfo: async token => {
-    set({ loadingAccountInfo: true });
+    set({loadingAccountInfo: true});
     const response = await fetchAccountInfo(token);
-    const { user } = await response.json();
+    const {user} = await response.json();
     set({
-      account: { name: user.display_name, image: user.cover_url, link: user.url },
+      account: {name: user.display_name, image: user.cover_url, link: user.url},
     });
-    set({ loadingAccountInfo: false });
+    set({loadingAccountInfo: false});
+  },
+  validateApiKey: async token => {
+    set({awaitingToken: true});
+    const result = await checkApiKey(token);
+    if (result) {
+      set({token: token});
+    }
+    set({awaitingToken: false});
   },
   validateToken: async token => {
-    set({ awaitingToken: true });
-    const result = await checkToken(token);
+    set({awaitingToken: true});
+    const result = await checkOauthToken(token);
     if (result) {
-      set({ token: token });
+      set({token: token});
     }
-    set({ awaitingToken: false });
+    set({awaitingToken: false});
   },
   fetchItchioStore: async (page = 1) => {
-    set({ loadingStore: true });
+    set({loadingStore: true});
     if (!get().gamestore.length) {
       const response = await getPotentialPlaydateGameNames(page);
-      set({ gamestore: response });
+      set({gamestore: response});
     }
-    set({ loadingStore: false });
+    set({loadingStore: false});
   },
   fetchItchioOwnedGames: async () => {
-    set({ loadingOwned: true });
+    set({loadingOwned: true});
 
     // Get Games from itchio
     if (!get().ownedGames.length) {
-      const { owned_keys } = await fetchOwnedGames(get().token);
+      const {owned_keys} = await fetchOwnedGames(get().token);
       const games = [];
 
       if (owned_keys?.length > 0) {
         // Loop owned games
         owned_keys.map(item => {
-          const { game, updated_at, id } = item;
+          const {game, updated_at, id} = item;
 
           games.push({
             id: game.id,
@@ -70,26 +78,25 @@ const useItchioStore = create((set, get) => ({
         });
       }
 
-      set({ ownedGames: games });
+      set({ownedGames: games});
     }
-    set({ loadingOwned: false });
+    set({loadingOwned: false});
   },
-  setAwait: bool => set({ awaitingToken: bool }),
+  setAwait: bool => set({awaitingToken: bool}),
   setGameStatus: async (game, status) => {
     let games = get().ownedGames;
 
     const updatedGames = games.map(g => {
       if (g.id === game.id) {
-        console.log({ ...g, status });
-        return { ...g, status };
+        console.log({...g, status});
+        return {...g, status};
       } else {
         return g;
       }
     });
 
-    set({ ownedGames: updatedGames });
+    set({ownedGames: updatedGames});
   },
-}
-));
+}));
 
 export default useItchioStore;

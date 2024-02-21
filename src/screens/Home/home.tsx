@@ -11,6 +11,7 @@ import FLAGS from "constants/flags";
 import useItchioStoreData from "hooks/useItchioStoreData";
 import useItchioOwnedGamesData from "hooks/useItchioOwnedGamesData";
 import useItchioStore from "store/itchio";
+import {getDownloadedGames} from "helper/fs";
 
 // @ts-ignore
 const Home = ({navigation}) => {
@@ -26,6 +27,15 @@ const Home = ({navigation}) => {
   } = useItchioOwnedGamesData();
 
   const favouriteGames = useItchioStore(state => state.favouriteGames);
+
+  useEffect(() => {
+    const getDownloadedGamesAsync = async () => {
+      const games = await getDownloadedGames(ownedGames);
+      console.log(games);
+    };
+
+    getDownloadedGamesAsync();
+  }, [ownedGames, getDownloadedGames]);
 
   useEffect(() => {
     fetchItchioStore(1);

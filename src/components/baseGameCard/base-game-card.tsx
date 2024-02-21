@@ -5,6 +5,7 @@ import {TouchableOpacity} from "react-native-windows";
 import {Game, GameStatus} from "types/itchio.types";
 import {CardAction} from "./card-actions";
 import useGameStatus from "hooks/useGameStatus";
+import {fetchGameDownload} from "api/itchio";
 
 type BaseGameCardProps = {
   game: Game;
@@ -13,7 +14,9 @@ type BaseGameCardProps = {
 const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
   const {status} = useGameStatus(game);
 
-  const downloadAction = () => console.log("Downloading", game.title);
+  const downloadAction = () => {
+    fetchGameDownload(game);
+  };
   const sideloadAction = () => console.log("Sideloading", game.title);
   const doneAction = () => console.log("Game done", game.title);
   const updateAction = () => console.log("Updating", game.title);
