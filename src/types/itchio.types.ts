@@ -4,7 +4,7 @@ export interface Game {
   img: string;
   updated_at: string;
   sideloaded?: boolean;
-  download_key?: string;
+  download_key: number;
   status?: GameStatus;
 }
 
@@ -29,7 +29,7 @@ export interface ItchioUserInfo {
   image?: string;
 }
 
-export interface ItchioUser {}
+
 
 export interface CredentialsInfo {
   errors?: string[];
@@ -69,41 +69,12 @@ export interface ItchioGame {
   still_cover_url?: string;
 }
 
-type OwnedGamesUser = {
-  id: number;
-  url: string;
-  display_name: string;
-  username: string;
-  cover_url: string;
-};
-
 export type OwnedGame = {
-  user: OwnedGamesUser;
   id: number;
-  traits: string[];
-  short_text: string;
   title: string;
-  cover_url: string;
-  published_at: string;
-  created_at: string;
-  min_price: number;
-  classification: string;
-  url: string;
-  type: string;
+  img: string;
+  updated_at: string;
+  download_key: number;
 };
 
-export interface OwnedKey {
-  created_at: string;
-  id: number;
-  updated_at: string;
-  downloads: number;
-  game_id: number;
-  game: OwnedGame;
-  purchase_id?: number;
-}
 
-export interface OwnedGamesResponse {
-  owned_keys: OwnedKey[];
-  page: number;
-  per_page: number;
-}

@@ -5,7 +5,7 @@ const useItchioOwnedGamesData = () => {
   const fetchItchioOwnedGames = useItchioStore(
     state => state.fetchItchioOwnedGames,
   );
-  const isLoading = useItchioStore(state => state.loadingGames);
+  const isLoading = useItchioStore(state => state.loadingOwned);
 
   return {games, isLoading, fetchItchioOwnedGames};
 };

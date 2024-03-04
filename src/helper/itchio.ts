@@ -1,25 +1,20 @@
 import DomSelector from "react-native-dom-parser";
 import {fetchItchioTaggedGames, fetchOwnedGames} from "../api/itchio";
 import {ATTRIBUTES, QUERY} from "../constants/itchio";
-import {
-  Game,
-  GameDOMElement,
-  ItchioGame,
-  OwnedGamesResponse,
-} from "../types/itchio.types";
+import {Game, GameDOMElement, ItchioGame} from "../types/itchio.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {ApiOwnedGamesResponse} from "api/types/itchio.types";
 
 const GAME_ID_ERROR = "error - unknown id";
 const DEFAULT_GAME_IMG = "";
 
 export async function getOwnedGames(
   authorization: string,
-): Promise<OwnedGamesResponse> {
+): Promise<ApiOwnedGamesResponse> {
   try {
-    const response = await fetchOwnedGames(authorization);
-    const games = await response.json();
-    console.log("OWNED GAMES ----->", games);
-    return games;
+    const result = await fetchOwnedGames(authorization);
+
+    return result;
   } catch (error) {
     console.error("Error fetching owned games:", error);
     return {owned_keys: [], page: 0, per_page: 50};

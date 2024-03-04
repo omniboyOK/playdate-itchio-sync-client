@@ -11,7 +11,7 @@ const RootNavigator = () => {
 
   const asyncLogin = useCallback(async () => {
     const accessToken = await AsyncStorage.getItem("userToken");
-    validateApiKey(accessToken);
+    validateApiKey(accessToken || "");
   }, [validateApiKey]);
 
   useEffect(() => {

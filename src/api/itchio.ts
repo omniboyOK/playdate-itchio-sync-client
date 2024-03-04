@@ -1,12 +1,8 @@
 import {downloadGame} from "helper/fs";
 import {FetchResponse} from "../types/api.types";
-import {
-  CredentialsInfo,
-  Game,
-  ItchioUserInfo,
-  OwnedGamesResponse,
-} from "../types/itchio.types";
+import {CredentialsInfo, Game} from "../types/itchio.types";
 import {getAuthToken} from "helper/auth";
+import {ApiOwnedGamesResponse, ItchioUserResponse} from "./types/itchio.types";
 
 export const fetchItchioTaggedGames = async (
   page: number,
@@ -30,25 +26,26 @@ export const fetchCredentialsInfo = async (
 
 export const fetchAccountInfo = async (
   token: string,
-): Promise<FetchResponse<ItchioUserInfo>> => {
+): Promise<FetchResponse<ItchioUserResponse>> => {
   return await fetch(`https://itch.io/api/1/${token}/me`);
 };
 
 export const fetchOwnedGames = async (
   authorization: string,
-): Promise<FetchResponse<OwnedGamesResponse>> => {
+): Promise<ApiOwnedGamesResponse> => {
   const response = await fetch("https://api.itch.io/profile/owned-keys", {
     headers: {
       authorization,
     },
   });
+
   const result = await response.json();
 
   return result;
 };
 
 export const getDownloadSession = async (
-  download_key_id: string,
+  download_key_id: number,
   authorization: string,
 ): Promise<{uuid: string}> => {
   const response = await fetch(

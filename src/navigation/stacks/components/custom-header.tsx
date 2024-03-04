@@ -25,7 +25,7 @@ const CustomHeader = () => {
   };
 
   const goToProfile = () => {
-    Linking.openURL(link);
+    return link ? Linking.openURL(link) : undefined;
   };
 
   return (
