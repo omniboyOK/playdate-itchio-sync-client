@@ -1,8 +1,23 @@
 import {create} from "zustand";
 import {asyncLogout, getSideloads, login} from "../helper/playdate";
-import useItchioStore from "./itchio";
+import { PlaydateGame } from "types/playdate.types";
 
-const usePlaydateStore = create(set => ({
+interface PlaydateStoreState {
+  token: string | null;
+  isLoading: boolean;
+  ownedGames: PlaydateGame[];
+  isSideLoading: boolean;
+}
+
+type PlaydateActions = {
+  logout: () => Promise<void>;
+  login: (user: string, pass: string) => Promise<void>;
+  setLoading: (isLoading: boolean) => void;
+  getOwnedGames: () => Promise<void>;
+  sideLoadGame: (gameId: number) => Promise<void>; // Assuming gameId is a number, adjust as necessary
+};
+
+const usePlaydateStore = create<PlaydateStoreState & PlaydateActions>(set => ({
   token: null,
   isLoading: false,
   ownedGames: [],
@@ -23,7 +38,10 @@ const usePlaydateStore = create(set => ({
   },
   sideLoadGame: async gameId => {
     set({isSideLoading: true});
-    const {ownedGames, fetchItchioOwnedGames} = useItchioStore.getState();
+
+    console.log(gameId);
+
+    /* const {ownedGames, fetchItchioOwnedGames} = useItchioStore.getState();
 
     // Find the game by ID and update its 'sideloaded' property
     const updatedOwnedGames = ownedGames.map(game =>
@@ -31,7 +49,7 @@ const usePlaydateStore = create(set => ({
     );
 
     // Use the action from useItchioStore to update the state
-    fetchItchioOwnedGames(updatedOwnedGames);
+    fetchItchioOwnedGames(updatedOwnedGames); */
     set({isSideLoading: false});
   },
 }));

@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // @ts-ignore
 import DomSelector from "react-native-dom-parser";
+import {PlaydateGame} from "types/playdate.types";
 
 export const signInAsync = async (token: string): Promise<void> => {
   await AsyncStorage.setItem("playdateToken", token);
@@ -49,15 +50,8 @@ export const login = async (
   return null;
 };
 
-interface Game {
-  id: string;
-  date: string;
-  title: string;
-  version: string;
-}
-
-export async function getSideloads(): Promise<Game[]> {
-  const games: Game[] = [];
+export async function getSideloads(): Promise<PlaydateGame[]> {
+  const games: PlaydateGame[] = [];
   const response = await fetch("https://play.date/account/", {
     credentials: "include",
   });
@@ -75,7 +69,7 @@ export async function getSideloads(): Promise<Game[]> {
     const date = child.getElementByClassName("game-date").text.trim(); // todo: normalize this to ISO8061
     const title = child.getElementByClassName("game-title").text.trim();
     const version = child.getElementByClassName("game-version").text.trim();
-    const game: Game = {
+    const game: PlaydateGame = {
       id,
       date,
       title,
