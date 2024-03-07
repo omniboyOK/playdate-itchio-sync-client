@@ -12,7 +12,6 @@ import {
 } from "../../../constants/routes";
 import ItchioGames from "../../../screens/Itchio/ItchioGames/storeGames/ItchioGames";
 import {MainStackParamList} from "../../types";
-import PlaydateForm from "../../../screens/playdate/playdateAuth/playdate-auth";
 import Home from "screens/Home/home";
 import {TextStyle, ViewStyle} from "react-native-windows";
 import FavouriteGames from "screens/Itchio/ItchioGames/favouriteGames/favourite-games";
@@ -20,6 +19,7 @@ import OwnedGames from "screens/Itchio/ItchioGames/ownedGames/owned-games";
 import {ACRYLIC_COLOR} from "constants/colors";
 import BackButton from "../components/back-button";
 import CustomHeader from "../components/custom-header";
+import PlaydateModalForm from "screens/playdate/playdateModalAuth/playdate-modal-auth";
 
 const Stack = createStackNavigator<MainStackParamList>();
 
@@ -78,7 +78,7 @@ const MainStack = () => {
       />
       <Stack.Screen
         name={PLAYDATE_AUTH_ROUTE}
-        component={PlaydateForm}
+        component={PlaydateModalForm}
         key={PLAYDATE_AUTH_ROUTE}
         options={{}}
       />

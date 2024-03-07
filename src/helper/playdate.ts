@@ -1,14 +1,45 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 // @ts-ignore
 import DomSelector from "react-native-dom-parser";
+import useItchioStore from "store/itchio";
+import {Game} from "types/itchio.types";
 import {PlaydateGame} from "types/playdate.types";
+import {getGameFromStorage, saveGameToStorage} from "./itchio";
+import {readFile} from "@dr.pogodin/react-native-fs";
+import {GAMES_FOLDER} from "./fs";
+import {debugLog} from "./debug";
 
-export const signInAsync = async (token: string): Promise<void> => {
-  await AsyncStorage.setItem("playdateToken", token);
+export const savePlaydateCred = async (
+  email: string,
+  password: string,
+): Promise<void> => {
+  await AsyncStorage.setItem("playdateEmail", email);
+  await AsyncStorage.setItem("playdatePassword", password);
 };
 
-export const asyncLogout = async (): Promise<void> => {
-  await AsyncStorage.removeItem("playdateToken");
+export const getPlaydateCredentials = async (): Promise<{
+  user: string | null;
+  pass: string | null;
+}> => {
+  try {
+    const user = await AsyncStorage.getItem("playdateEmail");
+    const pass = await AsyncStorage.getItem("playdatePassword");
+    return {
+      user,
+      pass,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      user: null,
+      pass: null,
+    };
+  }
+};
+
+export const asyncPlaydateLogout = async (): Promise<void> => {
+  await AsyncStorage.removeItem("playdateEmail");
+  await AsyncStorage.removeItem("playdatePassword");
 };
 
 async function getCSRF(url: string): Promise<string> {
@@ -20,34 +51,43 @@ async function getCSRF(url: string): Promise<string> {
   const matches = regex.exec(text);
 
   const csrfToken = matches?.length ? matches[1] : "";
+
+  debugLog(csrfToken);
+
   return csrfToken;
 }
 
-export const login = async (
+export const pdLogin = async (
   username: string,
   password: string,
-): Promise<string | null> => {
-  const token = await getCSRF("https://play.date/signin/");
+): Promise<void> => {
+  try {
+    debugLog("login to playdate");
 
-  const body = new URLSearchParams();
-  body.append("csrfmiddlewaretoken", token);
-  body.append("username", username);
-  body.append("password", password);
+    const token = await getCSRF("https://play.date/signin/");
 
-  const result = await fetch("https://play.date/", {
-    body: body.toString(),
-    method: "POST",
-    headers: {
-      Referer: "https://play.date/signin/",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-  });
+    debugLog("got csrf");
 
-  if (result.ok) {
-    return token;
+    const body = new URLSearchParams();
+    body.append("csrfmiddlewaretoken", token);
+    body.append("username", username);
+    body.append("password", password);
+
+    debugLog("starting login fetch");
+
+    await fetch("https://play.date/", {
+      body: body.toString(),
+      method: "POST",
+      headers: {
+        Referer: "https://play.date/signin/",
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+
+    debugLog("Login ok");
+  } catch (e) {
+    console.log(e);
   }
-
-  return null;
 };
 
 export async function getSideloads(): Promise<PlaydateGame[]> {
@@ -80,3 +120,70 @@ export async function getSideloads(): Promise<PlaydateGame[]> {
 
   return games;
 }
+
+export const uploadToPlaydate = async (game: Game): Promise<void> => {
+  // upload logic to playdate
+  const {setGameStatus} = useItchioStore.getState();
+
+  try {
+    let localData = await getGameFromStorage(game.id.toString());
+
+    await uploadGame(`${GAMES_FOLDER}/${localData?.filename}`);
+
+    // Save status locally until new update comes up
+    if (localData) {
+      localData = {...localData, status: "done"};
+      await saveGameToStorage(localData);
+    }
+
+    setGameStatus(game, "done");
+  } catch (e) {
+    setGameStatus(game, "error");
+  }
+};
+
+export async function uploadGame(path: string): Promise<void> {
+  try {
+    debugLog("uploading to playdate");
+    const token = await getCSRF("https://play.date/account/sideload/");
+
+    const body = new FormData();
+    body.append("csrfmiddlewaretoken", token);
+
+    debugLog("getting game file");
+
+    const fileContent = await readFile(path);
+
+    body.append("file", fileContent);
+
+    debugLog("starting fetch");
+
+    const result = await fetch("https://play.date/account/sideload/", {
+      method: "POST",
+      body,
+      headers: {
+        Referer: "https://play.date/account/sideload/",
+      },
+    });
+
+    console.log(result);
+
+    debugLog("finishing fetch upload");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const sideLoadPlaydateGames = async (games: Game[]): Promise<string> => {
+  try {
+    if (games?.length) {
+      const promises = games.map(game => uploadToPlaydate(game));
+      const results = await Promise.allSettled(promises);
+      console.log(results);
+    }
+
+    return "success";
+  } catch (e) {
+    return "error";
+  }
+};

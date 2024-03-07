@@ -3,8 +3,8 @@ import {
   exists,
   mkdir,
   DocumentDirectoryPath,
+  unlink,
 } from "@dr.pogodin/react-native-fs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Game, GameStorageInfo} from "types/itchio.types";
 import {getGameFromStorage, saveGameToStorage} from "./itchio";
 import {debugLog} from "./debug";
@@ -48,7 +48,7 @@ export const downloadGame = async (
   try {
     debugLog("starting download");
 
-    const {promise} = downloadFile({
+    await downloadFile({
       fromUrl: gameUrl,
       toFile: filePath,
       headers: {
@@ -56,26 +56,14 @@ export const downloadGame = async (
       },
     });
 
-    debugLog("downloading");
-
-    const res = await promise;
+    await syncDownloadedData({...gameInfo, filename});
 
     debugLog("finished downloading");
-
-    console.log(res);
-
-    await syncDownloadedData({...gameInfo, filename});
   } catch {
-    console.log("fail");
+    debugLog("error downloading game");
   }
 };
 
-export const getDownloadedGames = async (games: Game[]): Promise<Game[]> => {
-  const gameInfos = await Promise.all(
-    games.map(async item => {
-      const gameInfoString = await AsyncStorage.getItem(item.id.toString());
-      return gameInfoString ? (JSON.parse(gameInfoString) as Game) : null;
-    }),
-  );
-  return gameInfos.filter((gameInfo): gameInfo is Game => gameInfo !== null);
+export const purgeGameFolder = () => {
+  unlink(GAMES_FOLDER);
 };

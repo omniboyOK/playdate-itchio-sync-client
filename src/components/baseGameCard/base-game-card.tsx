@@ -7,13 +7,19 @@ import {CardAction} from "./card-actions";
 import {fetchGameDownload} from "api/itchio-service";
 import useItchioStore from "store/itchio";
 import BaseCardSkeleton from "components/baseCard/base-card-skeleton";
+import {sideLoadPlaydateGames} from "helper/playdate";
+import usePlaydateStore from "store/playdate";
+import {useNavigation} from "@react-navigation/native";
+import {PLAYDATE_AUTH_ROUTE} from "constants/routes";
 
 type BaseGameCardProps = {
   game: Game;
 };
 
 const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
+  const navigation = useNavigation();
   const {setGameStatus} = useItchioStore();
+  const {token} = usePlaydateStore();
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -29,9 +35,22 @@ const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
     }
   };
 
-  const sideloadAction = () => console.log("Sideloading", game.title);
+  const sideloadAction = async () => {
+    setLoading(true);
 
-  const doneAction = () => console.log("Game done", game.title);
+    if (!token) {
+      // @ts-ignore
+      return navigation.navigate(PLAYDATE_AUTH_ROUTE);
+    }
+
+    try {
+      await sideLoadPlaydateGames([game]);
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
+    }
+    setLoading(false);
+  };
 
   const updateAction = () => downloadAction();
 
@@ -44,7 +63,7 @@ const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
       case "sideload":
         return sideloadAction;
       case "done":
-        return doneAction;
+        return () => {};
       case "update":
         return updateAction;
       case "error":

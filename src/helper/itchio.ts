@@ -96,7 +96,7 @@ export async function saveGameToStorage(
       JSON.stringify(gameData),
     );
   } catch (e) {
-    console.log(e);
+    console.log("Error", e);
   }
 }
 
@@ -170,7 +170,7 @@ export async function transformToGameObject(
       if (updated_at > localData?.updated_at) {
         status = "update";
       } else {
-        status = "sideload";
+        status = localData.status === "done" ? "done" : "sideload";
       }
     }
 

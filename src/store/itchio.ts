@@ -29,6 +29,7 @@ interface ItchioStoreActions {
   fetchItchioOwnedGames: () => Promise<void>;
   setAwait: (bool: boolean) => void;
   setGameStatus: (game: Game, status: GameStatus) => Promise<void>;
+  clearOwnedGames: () => void;
 }
 
 const useItchioStore = create<ItchioStoreState & ItchioStoreActions>(
@@ -96,7 +97,7 @@ const useItchioStore = create<ItchioStoreState & ItchioStoreActions>(
         const {owned_keys} = await fetchOwnedGames(get().token || "");
 
         const games: Game[] = [];
-        console.log(owned_keys);
+
         // Create Game Object
         if (owned_keys?.length) {
           // Loop owned games
@@ -123,6 +124,9 @@ const useItchioStore = create<ItchioStoreState & ItchioStoreActions>(
       });
 
       set({ownedGames: updatedGames});
+    },
+    clearOwnedGames: () => {
+      set({ownedGames: []});
     },
   }),
 );

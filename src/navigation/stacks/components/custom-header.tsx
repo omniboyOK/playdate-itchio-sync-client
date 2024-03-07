@@ -11,10 +11,13 @@ import {
 import useItchioStore from "store/itchio";
 import Avatar from "assets/images/default-avatar.jpg";
 import Clipboard from "@react-native-clipboard/clipboard";
-import {GAMES_FOLDER} from "helper/fs";
+import {GAMES_FOLDER, purgeGameFolder} from "helper/fs";
+import {clearAsyncStorage} from "helper/debug";
+import { asyncPlaydateLogout } from "helper/playdate";
 
 const CustomHeader = () => {
-  const {token, getAccountInfo, account, logout} = useItchioStore();
+  const {token, getAccountInfo, account, logout, clearOwnedGames} =
+    useItchioStore();
 
   const {link, image, name} = account;
 
@@ -32,6 +35,14 @@ const CustomHeader = () => {
 
   const copyFolderRoute = () => {
     Clipboard.setString(GAMES_FOLDER);
+  };
+
+  const clearAllCache = () => {
+    purgeGameFolder();
+    clearAsyncStorage();
+    asyncPlaydateLogout();
+    clearOwnedGames();
+    logout();
   };
 
   return (
@@ -74,20 +85,43 @@ const CustomHeader = () => {
           <Text style={{lineHeight: 14}}>Sign Out</Text>
         </TouchableOpacity>
         {__DEV__ ? (
-          <TouchableOpacity
-            onPress={copyFolderRoute}
-            style={{
-              justifyContent: "center",
-            }}>
-            <Icon
-              name="file-directory"
-              size={14}
+          <>
+            <TouchableOpacity
+              onPress={copyFolderRoute}
               style={{
-                alignSelf: "center",
-                margin: 5,
-              }}
-            />
-          </TouchableOpacity>
+                justifyContent: "center",
+              }}>
+              <Icon
+                name="file-directory"
+                size={14}
+                style={{
+                  alignSelf: "center",
+                  margin: 5,
+                }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={clearAllCache}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 5,
+                  justifyContent: "center",
+                  marginHorizontal: 10,
+                  borderWidth: 1,
+                  borderRadius: 3,
+                  padding: 3,
+                }}>
+                <Icon
+                  name="bug"
+                  size={14}
+                  style={{
+                    alignSelf: "center",
+                  }}
+                />
+                <Text style={{lineHeight: 14}}>Clean Cache</Text>
+              </View>
+            </TouchableOpacity>
+          </>
         ) : null}
       </View>
     </View>

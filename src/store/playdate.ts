@@ -1,12 +1,20 @@
 import {create} from "zustand";
-import {asyncLogout, getSideloads, login} from "../helper/playdate";
+import {
+  asyncPlaydateLogout,
+  getPlaydateCredentials,
+  getSideloads,
+  pdLogin,
+  savePlaydateCred,
+} from "../helper/playdate";
 import {PlaydateGame} from "types/playdate.types";
 
 interface PlaydateStoreState {
-  token: string | null;
+  showPlaydateLogin: boolean;
+  token: string;
   isLoading: boolean;
   ownedGames: PlaydateGame[];
   isSideLoading: boolean;
+  error: string;
 }
 
 type PlaydateActions = {
@@ -15,21 +23,44 @@ type PlaydateActions = {
   setLoading: (isLoading: boolean) => void;
   getOwnedGames: () => Promise<void>;
   sideLoadGame: () => void;
+  signInPlaydateAsync: () => void;
 };
 
 const usePlaydateStore = create<PlaydateStoreState & PlaydateActions>(set => ({
-  token: null,
+  showPlaydateLogin: false,
+  token: "",
   isLoading: false,
+  error: "",
   ownedGames: [],
   isSideLoading: false,
   logout: async () => {
-    set({token: null, isLoading: false});
-    await asyncLogout();
+    set({token: "", isLoading: false});
+    await asyncPlaydateLogout();
   },
   login: async (user, pass) => {
-    set({isLoading: true});
-    const token = await login(user, pass);
-    set({isLoading: false, token: token});
+    set({isLoading: true, error: ""});
+    try {
+      await pdLogin(user, pass);
+      await savePlaydateCred(user, pass);
+      set({isLoading: false, token: "playdate"});
+    } catch (e) {
+      set({isLoading: false, token: "", error: "ERROR LOGIN TO PLAYDATE"});
+    }
+  },
+  signInPlaydateAsync: async () => {
+    set({isLoading: true, token: ""});
+    try {
+      const {user, pass} = await getPlaydateCredentials();
+
+      if (user && pass) {
+        await pdLogin(user, pass);
+      } else {
+        await asyncPlaydateLogout();
+      }
+      set({isLoading: false, token: "playdate"});
+    } catch (e) {
+      set({isLoading: false, token: "", error: "ERROR LOGIN TO PLAYDATE"});
+    }
   },
   setLoading: bool => set({isLoading: bool}),
   getOwnedGames: async () => {
