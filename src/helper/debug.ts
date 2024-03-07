@@ -10,5 +10,7 @@ export const clearAsyncStorage = async (): Promise<void> => {
 };
 
 export const debugLog = (text: string): void => {
-  console.log("--", text.toUpperCase(), "--");
+  if (__DEV__) {
+    console.log("--", text.toUpperCase(), "--");
+  }
 };
