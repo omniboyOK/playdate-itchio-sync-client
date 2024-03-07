@@ -1,6 +1,6 @@
 import {Linking} from "react-native-windows";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {fetchCredentialsInfo} from "../api/itchio";
+import {fetchCredentialsInfo} from "../api/itchio-service";
 import {ITCHIO_LOGIN_URL} from "@env";
 
 // Oauth Login with app token
@@ -32,7 +32,6 @@ export const checkOauthToken = async (token: string): Promise<string> => {
   try {
     const response = await fetchCredentialsInfo(token);
     const {errors, user} = await response.json();
-    console.log(errors, user);
 
     if (errors?.length) throw new Error("Invalid Token");
 

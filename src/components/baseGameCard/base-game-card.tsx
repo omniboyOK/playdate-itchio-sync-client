@@ -1,25 +1,40 @@
 import BaseCard from "components/baseCard/base-card";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
 import {TouchableOpacity} from "react-native-windows";
 import {Game, GameStatus} from "types/itchio.types";
 import {CardAction} from "./card-actions";
-import useGameStatus from "hooks/useGameStatus";
-import {fetchGameDownload} from "api/itchio";
+import {fetchGameDownload} from "api/itchio-service";
+import useItchioStore from "store/itchio";
+import BaseCardSkeleton from "components/baseCard/base-card-skeleton";
 
 type BaseGameCardProps = {
   game: Game;
 };
 
 const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
-  const {status} = useGameStatus(game);
+  const {setGameStatus} = useItchioStore();
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const downloadAction = () => {
-    fetchGameDownload(game);
+  const downloadAction = async () => {
+    try {
+      setLoading(true);
+      await fetchGameDownload(game);
+      await setGameStatus(game, "sideload");
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      // Add clean logic for file and asyncstorage
+    }
   };
+
   const sideloadAction = () => console.log("Sideloading", game.title);
+
   const doneAction = () => console.log("Game done", game.title);
-  const updateAction = () => console.log("Updating", game.title);
+
+  const updateAction = () => downloadAction();
+
   const errorAction = () => console.log("Error with", game.title);
 
   const determineAction = (status: GameStatus): (() => void) => {
@@ -39,19 +54,29 @@ const BaseGameCard: React.FC<BaseGameCardProps> = ({game}) => {
     }
   };
 
-  const disabledStates = status === "error" || status === "done";
+  useEffect(() => {
+    const disabledStates = ["error", "done", "not_owned"];
+
+    if (game.status) {
+      setDisabled(disabledStates.includes(game.status));
+    }
+  }, [game.status]);
+
+  if (loading) {
+    return <BaseCardSkeleton />;
+  }
 
   return (
     <TouchableOpacity
-      onPress={determineAction(status)}
-      disabled={disabledStates}>
+      onPress={determineAction(game.status)}
+      disabled={disabled}>
       <BaseCard>
         <View style={styles.container}>
           <Image source={{uri: game.img}} style={styles.image} />
           <Text style={styles.title} numberOfLines={2}>
             {game.title}
           </Text>
-          <CardAction status={status} />
+          <CardAction status={game.status} />
         </View>
       </BaseCard>
     </TouchableOpacity>

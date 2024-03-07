@@ -10,6 +10,8 @@ import {
 } from "react-native-windows";
 import useItchioStore from "store/itchio";
 import Avatar from "assets/images/default-avatar.jpg";
+import Clipboard from "@react-native-clipboard/clipboard";
+import {GAMES_FOLDER} from "helper/fs";
 
 const CustomHeader = () => {
   const {token, getAccountInfo, account, logout} = useItchioStore();
@@ -26,6 +28,10 @@ const CustomHeader = () => {
 
   const goToProfile = () => {
     return link ? Linking.openURL(link) : undefined;
+  };
+
+  const copyFolderRoute = () => {
+    Clipboard.setString(GAMES_FOLDER);
   };
 
   return (
@@ -67,6 +73,22 @@ const CustomHeader = () => {
           <Icon name="sign-out" size={14} style={{alignSelf: "center"}} />
           <Text style={{lineHeight: 14}}>Sign Out</Text>
         </TouchableOpacity>
+        {__DEV__ ? (
+          <TouchableOpacity
+            onPress={copyFolderRoute}
+            style={{
+              justifyContent: "center",
+            }}>
+            <Icon
+              name="file-directory"
+              size={14}
+              style={{
+                alignSelf: "center",
+                margin: 5,
+              }}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );

@@ -1,6 +1,6 @@
 import {create} from "zustand";
 import {asyncLogout, getSideloads, login} from "../helper/playdate";
-import { PlaydateGame } from "types/playdate.types";
+import {PlaydateGame} from "types/playdate.types";
 
 interface PlaydateStoreState {
   token: string | null;
@@ -14,7 +14,7 @@ type PlaydateActions = {
   login: (user: string, pass: string) => Promise<void>;
   setLoading: (isLoading: boolean) => void;
   getOwnedGames: () => Promise<void>;
-  sideLoadGame: (gameId: number) => Promise<void>; // Assuming gameId is a number, adjust as necessary
+  sideLoadGame: () => void;
 };
 
 const usePlaydateStore = create<PlaydateStoreState & PlaydateActions>(set => ({
@@ -36,10 +36,8 @@ const usePlaydateStore = create<PlaydateStoreState & PlaydateActions>(set => ({
     const games = await getSideloads();
     set({ownedGames: games});
   },
-  sideLoadGame: async gameId => {
+  sideLoadGame: () => {
     set({isSideLoading: true});
-
-    console.log(gameId);
 
     /* const {ownedGames, fetchItchioOwnedGames} = useItchioStore.getState();
 

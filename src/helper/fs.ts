@@ -1,51 +1,73 @@
-import * as RNFS from "@dr.pogodin/react-native-fs";
+import {
+  downloadFile,
+  exists,
+  mkdir,
+  DocumentDirectoryPath,
+} from "@dr.pogodin/react-native-fs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Game} from "types/itchio.types";
-import {saveGame} from "./itchio";
+import {Game, GameStorageInfo} from "types/itchio.types";
+import {getGameFromStorage, saveGameToStorage} from "./itchio";
+import {debugLog} from "./debug";
 
-export const GAMES_FOLDER = `${RNFS.DocumentDirectoryPath}/myAppGames`;
+export const GAMES_FOLDER = `${DocumentDirectoryPath}/myAppGames`;
 
 export const createAppFolder = async () => {
-  console.log("Creating Folder");
+  debugLog("creating folder");
+
   const folderPath = GAMES_FOLDER;
-  const exists = await RNFS.exists(folderPath);
-  if (!exists) {
-    console.log("Folder created");
-    await RNFS.mkdir(folderPath);
+  const isCreated = await exists(folderPath);
+  if (!isCreated) {
+    debugLog("folder created succesfully");
+    await mkdir(folderPath);
   }
+
   return folderPath;
+};
+
+const syncDownloadedData = (gameInfo: GameStorageInfo): void => {
+  debugLog("saving game data");
+
+  saveGameToStorage(gameInfo);
+};
+
+export const checkGameFile = async (game: Game): Promise<boolean> => {
+  const result = await getGameFromStorage(game.id.toString());
+
+  return result ? true : false;
 };
 
 export const downloadGame = async (
   gameUrl: string,
   gameInfo: Game,
+  filename: string,
   authorization: string,
 ) => {
   const folderPath = await createAppFolder();
-  const filePath = `${folderPath}/${gameInfo.title}`;
-  console.log("SETTED PATH");
+  const filePath = `${folderPath}/${filename}`;
 
-  await RNFS.downloadFile({
-    fromUrl: gameUrl,
-    toFile: filePath,
-    headers: {
-      authorization,
-    },
-  })
-    .promise.then(response => {
-      if (response.statusCode == 200) {
-        console.log("DOWNLOAD OK");
-        saveGame(gameInfo);
-      } else {
-        console.log("SERVER ERROR", response);
-      }
-    })
-    .catch(err => {
-      if (err.description === "cancelled") {
-        // cancelled by user
-      }
-      console.log(err);
+  try {
+    debugLog("starting download");
+
+    const {promise} = downloadFile({
+      fromUrl: gameUrl,
+      toFile: filePath,
+      headers: {
+        authorization,
+      },
     });
+
+    debugLog("downloading");
+
+    const res = await promise;
+
+    debugLog("finished downloading");
+
+    console.log(res);
+
+    await syncDownloadedData({...gameInfo, filename});
+  } catch {
+    console.log("fail");
+  }
 };
 
 export const getDownloadedGames = async (games: Game[]): Promise<Game[]> => {

@@ -2,7 +2,12 @@ import {downloadGame} from "helper/fs";
 import {FetchResponse} from "../types/api.types";
 import {CredentialsInfo, Game} from "../types/itchio.types";
 import {getAuthToken} from "helper/auth";
-import {ApiOwnedGamesResponse, ItchioUserResponse} from "./types/itchio.types";
+import {
+  ApiDownloadSessionResponse,
+  ApiOwnedGamesResponse,
+  ItchioUserResponse,
+} from "./types/itchio.types";
+import {debugLog} from "helper/debug";
 
 export const fetchItchioTaggedGames = async (
   page: number,
@@ -44,12 +49,12 @@ export const fetchOwnedGames = async (
   return result;
 };
 
-export const getDownloadSession = async (
-  download_key_id: number,
+export const fetchDownloadSession = async (
+  game_id: number,
   authorization: string,
-): Promise<{uuid: string}> => {
+): Promise<ApiDownloadSessionResponse> => {
   const response = await fetch(
-    `https://api.itch.io/games/${download_key_id}/download-sessions`,
+    `https://api.itch.io/games/${game_id}/download-sessions`,
     {
       method: "POST",
       headers: {
@@ -57,32 +62,34 @@ export const getDownloadSession = async (
       },
     },
   );
+
   const {uuid} = await response.json();
+
   return uuid;
 };
 
 export const fetchGameDownload = async (game: Game): Promise<void> => {
-  console.log("STARTING DOWNLOAD");
-  const {download_key, id} = game;
+  debugLog("starting download");
+  const {game_id, id} = game;
   try {
     const authorization = await getAuthToken();
-    console.log("GOT TOKEN");
-    // Get game downloads available
 
-    if (!authorization || !download_key) {
-      console.log("MISSING PARAMS");
+    // Get game downloads available
+    if (!authorization || !game_id) {
+      debugLog("missing params");
       return;
     }
 
     const {
       uploads: [upload],
     } = await getGameDownloads(game, authorization);
-    console.log("GOT UPLOAD");
-    const uuid = await getDownloadSession(download_key, authorization);
-    console.log("Got uuid", uuid);
-    await downloadGame(
+
+    const uuid = await fetchDownloadSession(game_id, authorization);
+
+    downloadGame(
       `https://api.itch.io/uploads/${upload.id}/download?api_key=${authorization}&download_key_id=${id}&uuid=${uuid}`,
       game,
+      upload.filename,
       authorization,
     );
   } catch (e) {
@@ -91,10 +98,10 @@ export const fetchGameDownload = async (game: Game): Promise<void> => {
 };
 
 export async function getGameDownloads(game: Game, authorization: string) {
-  const {download_key, id} = game;
+  const {game_id, id} = game;
   try {
     const response = await fetch(
-      `https://api.itch.io/games/${id}/uploads?download_key_id=${download_key}`,
+      `https://api.itch.io/games/${game_id}/uploads?download_key_id=${id}`,
       {
         headers: {
           authorization,
@@ -103,8 +110,6 @@ export async function getGameDownloads(game: Game, authorization: string) {
     );
 
     const result = await response.json();
-
-    console.log("Downloads", result);
 
     return result;
   } catch (e) {

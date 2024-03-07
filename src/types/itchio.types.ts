@@ -4,8 +4,8 @@ export interface Game {
   img: string;
   updated_at: string;
   sideloaded?: boolean;
-  download_key: number;
-  status?: GameStatus;
+  game_id: number;
+  status: GameStatus;
 }
 
 export type GameStatus =
@@ -14,6 +14,7 @@ export type GameStatus =
   | "done"
   | "update"
   | "error"
+  | "not_owned"
   | undefined;
 
 export interface GameDOMElement {
@@ -29,52 +30,11 @@ export interface ItchioUserInfo {
   image?: string;
 }
 
-
-
 export interface CredentialsInfo {
   errors?: string[];
   user?: ItchioUserInfo;
 }
 
-export interface ItchioGame {
-  min_price: number;
-  created_at: string;
-  id: number;
-  published_at: string;
-  url: string;
-  user: {
-    cover_url: string;
-    id: number;
-    username: string;
-    display_name: string;
-    url: string;
-  };
-  cover_url: string;
-  traits: string[];
-  classification: string;
-  title: string;
-  short_text: string;
-  type: string;
-  embed?: {
-    fullscreen: boolean;
-    width: number;
-    height: number;
-  };
-  sale?: {
-    rate: number;
-    id: number;
-    start_date: string;
-    end_date: string;
-  };
-  still_cover_url?: string;
+export interface GameStorageInfo extends Game {
+  filename: string;
 }
-
-export type OwnedGame = {
-  id: number;
-  title: string;
-  img: string;
-  updated_at: string;
-  download_key: number;
-};
-
-

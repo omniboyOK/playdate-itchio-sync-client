@@ -1,13 +1,16 @@
 import {create} from "zustand";
-import {fetchAccountInfo, fetchOwnedGames} from "../api/itchio";
+import {fetchAccountInfo, fetchOwnedGames} from "../api/itchio-service";
 import {asyncLogout, checkApiKey, checkOauthToken} from "../helper/auth";
-import {getPotentialPlaydateGameNames} from "../helper/itchio";
-import {Game, ItchioGame, ItchioUserInfo, OwnedGame} from "types/itchio.types";
+import {
+  getPotentialPlaydateGameNames,
+  transformToGameObject,
+} from "../helper/itchio";
+import {Game, GameStatus, ItchioUserInfo} from "types/itchio.types";
 
 interface ItchioStoreState {
-  gamestore: ItchioGame[];
+  gamestore: Game[];
   favouriteGames: Game[];
-  ownedGames: OwnedGame[];
+  ownedGames: Game[];
   loadingStore: boolean;
   loadingOwned: boolean;
   loadingFavourites: boolean;
@@ -25,7 +28,7 @@ interface ItchioStoreActions {
   fetchItchioStore: (page?: number) => Promise<void>;
   fetchItchioOwnedGames: () => Promise<void>;
   setAwait: (bool: boolean) => void;
-  setGameStatus: (game: Game, status: string) => Promise<void>;
+  setGameStatus: (game: Game, status: GameStatus) => Promise<void>;
 }
 
 const useItchioStore = create<ItchioStoreState & ItchioStoreActions>(
@@ -92,21 +95,15 @@ const useItchioStore = create<ItchioStoreState & ItchioStoreActions>(
       if (!get().ownedGames.length) {
         const {owned_keys} = await fetchOwnedGames(get().token || "");
 
-        const games: OwnedGame[] = [];
-
-        if (owned_keys?.length > 0) {
+        const games: Game[] = [];
+        console.log(owned_keys);
+        // Create Game Object
+        if (owned_keys?.length) {
           // Loop owned games
-          owned_keys.map(item => {
-            const {game, updated_at, id} = item;
-
-            games.push({
-              id: game.id,
-              title: game.title,
-              img: game.cover_url,
-              updated_at: updated_at,
-              download_key: id, // set download key
-            });
-          });
+          const promises = owned_keys.map(item =>
+            transformToGameObject(item, games),
+          );
+          await Promise.all(promises);
         }
 
         set({ownedGames: games});
@@ -119,7 +116,6 @@ const useItchioStore = create<ItchioStoreState & ItchioStoreActions>(
 
       const updatedGames = games.map(g => {
         if (g.id === game.id) {
-          console.log({...g, status});
           return {...g, status};
         } else {
           return g;

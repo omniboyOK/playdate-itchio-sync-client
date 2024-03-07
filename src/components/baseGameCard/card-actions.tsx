@@ -16,9 +16,10 @@ const statusIcons = {
 };
 
 const CardAction: React.FC<CardActionProps> = ({status = null}) => {
-
   const renderContent = () => {
     switch (status) {
+      case "not_owned":
+        return null;
       case "error":
         return (
           <Text style={[styles.action]}>
@@ -68,4 +69,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {CardAction}; // Asegúrate de no usar export default
+export {CardAction};

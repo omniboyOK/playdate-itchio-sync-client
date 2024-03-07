@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // import ReactNativeBlobUtil from "react-native-blob-util";
-import { fetchGameDownloads } from "../api/itchio";
+import { fetchGameDownloads } from "../api/itchio-service";
 
 // const FETCH_LIMIT = 6291456;
 // const PATH_TO_THE_FILE = "C:\\Users\\pc\\Downloads\\sync";
@@ -23,7 +23,7 @@ export async function downloadGame(game, authorization) {
     },
     authorization,
   );
-  const uuid = await getDownloadSession(download_key_id, authorization);
+  const uuid = await fetchDownloadSession(download_key_id, authorization);
   const session = await fetch(
     `https://api.itch.io/uploads/${upload.id}/download?api_key=${authorization}&download_key_id=${download_key_id}&uuid=${uuid}`,
     {
@@ -69,7 +69,7 @@ export async function downloadGame(game, authorization) {
   }); */
 }
 
-const getDownloadSession = async (download_key_id, authorization) => {
+const fetchDownloadSession = async (download_key_id, authorization) => {
   let response = await fetch(
     `https://api.itch.io/games/${download_key_id}/download-sessions`,
     {
