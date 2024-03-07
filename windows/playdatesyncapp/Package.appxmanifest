@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="89c77f4f-9f41-4af4-8901-99a15339c3cb"
-    Publisher="CN=Pablo"
+    Name="PlaydateSync.App"
+    Publisher="CN=Omniboy, C=AR"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="89c77f4f-9f41-4af4-8901-99a15339c3cb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>playdateclient</DisplayName>
-    <PublisherDisplayName>Pablo</PublisherDisplayName>
+    <DisplayName>Playdate Sync App</DisplayName>
+    <PublisherDisplayName>Omniboy</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -31,12 +31,12 @@
     <Application
       Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="playdateclient.App">
+      EntryPoint="playdatesyncapp.App">
       <uap:VisualElements
-        DisplayName="playdateclient"
+        DisplayName="playdatesyncapp"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="playdateclient"
+        Description="playdatesyncapp"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

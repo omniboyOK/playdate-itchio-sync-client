@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "playdateclient.app"
-               BlueprintName = "playdateclient"
-               ReferencedContainer = "container:playdateclient.xcodeproj">
+               BuildableName = "playdatesyncapp.app"
+               BlueprintName = "playdatesyncapp"
+               ReferencedContainer = "container:playdatesyncapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "playdateclientTests.xctest"
-               BlueprintName = "playdateclientTests"
-               ReferencedContainer = "container:playdateclient.xcodeproj">
+               BuildableName = "playdatesyncappTests.xctest"
+               BlueprintName = "playdatesyncappTests"
+               ReferencedContainer = "container:playdatesyncapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "playdateclient.app"
-            BlueprintName = "playdateclient"
-            ReferencedContainer = "container:playdateclient.xcodeproj">
+            BuildableName = "playdatesyncapp.app"
+            BlueprintName = "playdatesyncapp"
+            ReferencedContainer = "container:playdatesyncapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "playdateclient.app"
-            BlueprintName = "playdateclient"
-            ReferencedContainer = "container:playdateclient.xcodeproj">
+            BuildableName = "playdatesyncapp.app"
+            BlueprintName = "playdatesyncapp"
+            ReferencedContainer = "container:playdatesyncapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

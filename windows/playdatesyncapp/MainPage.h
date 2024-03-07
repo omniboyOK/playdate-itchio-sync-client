@@ -2,7 +2,7 @@
 #include "MainPage.g.h"
 #include <winrt/Microsoft.ReactNative.h>
 
-namespace winrt::playdateclient::implementation
+namespace winrt::playdatesyncapp::implementation
 {
     struct MainPage : MainPageT<MainPage>
     {
@@ -10,7 +10,7 @@ namespace winrt::playdateclient::implementation
     };
 }
 
-namespace winrt::playdateclient::factory_implementation
+namespace winrt::playdatesyncapp::factory_implementation
 {
     struct MainPage : MainPageT<MainPage, implementation::MainPage>
     {

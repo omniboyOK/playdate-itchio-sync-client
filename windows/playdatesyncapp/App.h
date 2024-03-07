@@ -5,7 +5,7 @@
 
 namespace activation = winrt::Windows::ApplicationModel::Activation;
 
-namespace winrt::playdateclient::implementation
+namespace winrt::playdatesyncapp::implementation
 {
     struct App : AppT<App>
     {
@@ -17,4 +17,4 @@ namespace winrt::playdateclient::implementation
       private:
         using super = AppT<App>;
     };
-} // namespace winrt::playdateclient::implementation
+} // namespace winrt::playdatesyncapp::implementation

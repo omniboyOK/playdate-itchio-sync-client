@@ -1,6 +1,6 @@
 #include "NamespaceRedirect.h"
 
-namespace playdateclient
+namespace playdatesyncapp
 {
     [default_interface]
     runtimeclass MainPage : XAML_NAMESPACE.Controls.Page

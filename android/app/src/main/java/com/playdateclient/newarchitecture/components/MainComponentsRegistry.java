@@ -1,4 +1,4 @@
-package com.playdateclient.newarchitecture.components;
+package com.playdatesyncapp.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

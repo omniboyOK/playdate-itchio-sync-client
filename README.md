@@ -18,8 +18,8 @@ This application allows users to sync their games from Itchio to the Playdate de
 1. **Clone the Repository**:
    
    ```bash
-   git clone https://github.com/your-username/playdateclient.git
-   cd playdateclient
+   git clone https://github.com/your-username/playdatesyncapp.git
+   cd playdatesyncapp
    ```
    
 3. **Install Dependencies**
